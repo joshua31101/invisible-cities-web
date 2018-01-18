@@ -1,0 +1,27 @@
+{
+  "name": "invisible-cities-api",
+  "version": "1.0.0",
+  "description": "API web app for Invisible Cities.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshua31101/invisible-cities-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joshua31101/invisible-cities-api/issues"
+  },
+  "homepage": "https://github.com/joshua31101/invisible-cities-api#readme",
+  "devDependencies": {
+    "nodemon": "^1.14.11"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "firebase": "^4.8.2"
+  }
+}
