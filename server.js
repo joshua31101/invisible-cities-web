@@ -10,3 +10,7 @@ app.use(require('./controllers'));
 webServer.listen(port, function () {
   console.log('listening on http://localhost:' + port);
 });
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
