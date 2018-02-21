@@ -1,28 +1,29 @@
 {
-  "name": "invisible-cities-api",
+  "name": "invisible-cities-web",
   "version": "1.0.0",
-  "description": "API web app for Invisible Cities.",
+  "description": "Website for Invisible Cities from Georgia Tech Arts@Tech.",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joshua31101/invisible-cities-api.git"
+    "url": "git+https://github.com/joshua31101/invisible-cities-web.git"
   },
   "author": "",
-  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/joshua31101/invisible-cities-api/issues"
+    "url": "https://github.com/joshua31101/invisible-cities-web/issues"
   },
-  "homepage": "https://github.com/joshua31101/invisible-cities-api#readme",
+  "homepage": "https://github.com/joshua31101/invisible-cities-web#readme",
   "devDependencies": {
     "nodemon": "^1.14.11"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "express-session": "^1.15.6",
     "firebase": "^4.8.2"
   }
 }
