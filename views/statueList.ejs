@@ -1,1 +1,43 @@
-Statue List
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include partials/head %>
+  <style media="screen">
+    .card {
+      margin-right: 1rem;
+      float: left;
+      width: 18rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <% include partials/header %>
+  </header>
+  <main class="container">
+    <div class="jumbotron text-center">
+      <h1>Statue Lists</h1>
+    </div>
+      <% for (let s in statues) { %>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= statues[s].name %></h5>
+            <h6 class="card-subtitle mb-2 text-muted"><%= statues[s].statueAsset %></h6>
+            <p class="card-text"><%= statues[s].description %></p>
+            <a href="#" class="btn alert-danger remove-btn" data-statue-name="<%= statues[s].name %>">Remove</a>
+          </div>
+        </div>
+      <% } %>
+  </main>
+</body>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.remove-btn').click(function(ev) {
+      let errMsg = 'Are you sure that you want to delete statue:' + ev.target.dataset['statueName'] + '?';
+      if (confirm(errMsg)) {
+        // Remove
+      }
+    })
+  })
+</script>
+</html>

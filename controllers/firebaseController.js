@@ -2,7 +2,8 @@ module.exports = {
   hasLoggedIn: hasLoggedIn,
 	login: login,
   logout: logout,
-  getUser: getUser
+  getUser: getUser,
+  getStatues: getStatues,
 }
 
 const firebase = require('firebase');
@@ -26,6 +27,12 @@ function hasLoggedIn() {
 
 function getUser() {
   return firebase.auth().currentUser;
+}
+
+function getStatues(callback) {
+  return firebase.database().ref('/Statues').once('value').then(function(snapshot) {
+    callback(snapshot.val());
+  });
 }
 
 function login(email, password, callback) {
