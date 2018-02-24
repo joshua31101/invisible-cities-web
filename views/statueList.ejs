@@ -8,34 +8,51 @@
       float: left;
       width: 18rem;
     }
+    form {
+      display: inline-block;
+    }
+    .card-container {
+      margin-bottom: 2rem;
+    }
   </style>
 </head>
 <body>
   <header>
     <% include partials/header %>
   </header>
-  <main class="container">
+  <main>
     <div class="jumbotron text-center">
       <h1>Statue Lists</h1>
     </div>
-      <% for (let s in statues) { %>
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"><%= statues[s].name %></h5>
-            <h6 class="card-subtitle mb-2 text-muted"><%= statues[s].statueAsset %></h6>
-            <p class="card-text"><%= statues[s].description %></p>
-            <a href="#" class="btn alert-danger remove-btn" data-statue-name="<%= statues[s].name %>">Remove</a>
+    <div class="container">
+      <div class="row">
+        <% for (let sId in statues) { %>
+          <div class="card-container col-sm-4">
+            <div class="card">
+              <img class="card-img-top" src="<%= statues[sId].image %>" alt="<%= statues[sId].name %>">
+              <div class="card-body">
+                <h5 class="card-title"><%= statues[sId].name %></h5>
+                <h6 class="card-subtitle mb-2 text-muted"><%= statues[sId].statueAsset %></h6>
+                <p class="card-text"><%= statues[sId].description %></p>
+                <form action="/statue" method="post">
+                  <input type="hidden" name="statueId" value="<%= sId %>">
+                  <button type="submit" class="btn alert-danger remove-btn" data-statue-name="<%= statues[sId].name %>">Remove</button>
+                </form>
+              </div>
+            </div>
           </div>
-        </div>
-      <% } %>
+        <% } %>
+      </div>
+    </div>
   </main>
 </body>
 <script type="text/javascript">
   $(document).ready(function() {
-    $('.remove-btn').click(function(ev) {
+    $('form').click(function(ev) {
+      ev.preventDefault();
       let errMsg = 'Are you sure that you want to delete statue:' + ev.target.dataset['statueName'] + '?';
       if (confirm(errMsg)) {
-        // Remove
+        $(this).unbind('submit').submit();
       }
     })
   })

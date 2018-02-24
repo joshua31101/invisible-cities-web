@@ -17,6 +17,15 @@ router.get('/', function(req, res) {
   }
 });
 
+router.post('/statue', urlencodedParser, function(req, res) {
+  if (firebase.hasLoggedIn()) {
+    firebase.removeStatue(req.body.statueId);
+    res.redirect('/');
+  } else {
+    res.redirect('/login');
+  }
+});
+
 router.get('/login', function(req, res) {
   if (firebase.hasLoggedIn()) {
     res.redirect('/');

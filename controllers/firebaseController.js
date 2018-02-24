@@ -4,6 +4,7 @@ module.exports = {
   logout: logout,
   getUser: getUser,
   getStatues: getStatues,
+  removeStatue: removeStatue,
 }
 
 const firebase = require('firebase');
@@ -33,6 +34,10 @@ function getStatues(callback) {
   return firebase.database().ref('/Statues').once('value').then(function(snapshot) {
     callback(snapshot.val());
   });
+}
+
+function removeStatue(sId) {
+  return firebase.database().ref('/Statues/' + sId).remove();
 }
 
 function login(email, password, callback) {
