@@ -1,0 +1,10 @@
+.card {
+  margin-right: 1rem;
+  float: left;
+  width: 100%; }
+
+form {
+  display: inline-block; }
+
+.card-container {
+  margin-bottom: 2rem; }

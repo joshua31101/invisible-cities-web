@@ -1,0 +1,11 @@
+.gt-navbar {
+  background-color: #262626; }
+  .gt-navbar img {
+    width: 100%;
+    height: auto; }
+  .gt-navbar h1 {
+    display: inline-block;
+    color: #fff; }
+  .gt-navbar .btn-logout {
+    margin: 8px;
+    float: right; }

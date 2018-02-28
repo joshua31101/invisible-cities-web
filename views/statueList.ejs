@@ -2,24 +2,10 @@
 <html lang="en">
 <head>
   <% include partials/head %>
-  <style media="screen">
-    .card {
-      margin-right: 1rem;
-      float: left;
-      width: 18rem;
-    }
-    form {
-      display: inline-block;
-    }
-    .card-container {
-      margin-bottom: 2rem;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/statueList.css">
 </head>
 <body>
-  <header>
-    <% include partials/header %>
-  </header>
+  <% include partials/header %>
   <main>
     <div class="jumbotron text-center">
       <h1>Statue Lists</h1>
@@ -45,6 +31,7 @@
       </div>
     </div>
   </main>
+  <% include partials/footer %>
 </body>
 <script type="text/javascript">
   $(document).ready(function() {

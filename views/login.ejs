@@ -4,10 +4,11 @@
   <% include partials/head %>
 </head>
 <body>
+  <% include partials/header %>
   <main>
     <div class="jumbotron text-center">
       <h1>Login</h1>
-      <p>Welcome to Invisible Cities</p>
+      <p>Welcome to Invisible Cities!</p>
     </div>
     <form class="container col-sm-6" action="/login" method="post">
       <div class="form-group">
@@ -26,6 +27,6 @@
       <% } %>
     </form>
   </main>
-
+  <% include partials/footer %>
 </body>
 </html>

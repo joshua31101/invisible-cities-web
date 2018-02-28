@@ -1,0 +1,16 @@
+@import "header";
+@import "footer";
+
+img {
+  max-width: 100%;
+}
+
+main {
+  min-height: 80vh;
+}
+
+.jumbotron {
+  margin: 0;
+  padding: 25px 0;
+  background-color: #fff;
+}

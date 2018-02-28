@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build-css": "node-sass --include-path scss scss/*   public/css/*",
+    "watch-css": "node-sass -w scss/ -o public/css/"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,7 @@
   },
   "homepage": "https://github.com/joshua31101/invisible-cities-web#readme",
   "devDependencies": {
+    "node-sass": "^4.7.2",
     "nodemon": "^1.14.11"
   },
   "dependencies": {

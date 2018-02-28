@@ -3,7 +3,7 @@ const express = require("express"),
       app = express(),
       http = require("http"),
       port = process.env.PORT || 5000,
-      webServer = http.createServer(app).listen(port),
+      webServer = http.createServer(app),
       session = require('express-session');
 
 if (process.env.NODE_ENV !== 'production') {
