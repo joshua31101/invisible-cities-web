@@ -49,6 +49,7 @@ router.post('/login', urlencodedParser, function(req, res) {
         req.session.error = 'Incorrect username or password.';
         res.redirect('/login');
     	} else {
+        req.session.email = email;
     		res.redirect('/');
       }
     }
@@ -61,6 +62,7 @@ router.get('/logout', function(req, res) {
     	if (error) {
     		return res.status(500).send(error.message);
     	} else {
+        delete req.session.email;
         res.redirect('/');
       }
     }

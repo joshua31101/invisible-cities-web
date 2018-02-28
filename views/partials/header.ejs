@@ -11,7 +11,9 @@
       </a>
     </div>
     <div class="col-sm-3">
-      <a href="/logout" class="btn btn-light btn-logout">Logout</a>
+      <% if (hasLoggedIn) { %>
+        <a href="/logout" class="btn btn-light btn-logout">Logout</a>
+      <% } %>
     </div>
   </nav>
 </header>

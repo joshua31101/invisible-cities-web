@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="/css/statueList.css">
 </head>
 <body>
-  <% include partials/header %>
+  <%- include('partials/header', { hasLoggedIn: true }) %>
   <main>
     <div class="jumbotron text-center">
       <h1>Statue Lists</h1>
