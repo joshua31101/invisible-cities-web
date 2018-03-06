@@ -8,3 +8,12 @@ form {
 
 .card-container {
   margin-bottom: 2rem; }
+
+.statue-info {
+  margin: 0; }
+  .statue-info span {
+    color: #721c24;
+    font-weight: bold; }
+
+.button-container {
+  text-align: right; }

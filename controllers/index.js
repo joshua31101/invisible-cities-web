@@ -1,42 +1,32 @@
 const express = require('express');
 const router = express.Router();
 const firebase = require('./firebaseController');
-const bodyParser = require('body-parser');
-const urlencodedParser = bodyParser.urlencoded({extended: false});
-
 
 router.get('/', function(req, res) {
-  if (firebase.hasLoggedIn()) {
-    firebase.getStatues(function(statues) {
-      res.render('statueList', {
-        statues: statues
-      });
-    })
-  } else {
-    res.redirect('/login');
-  }
+  firebase.getStatues(function(statues) {
+    res.render('statueList', {
+      statues: statues
+    });
+  });
 });
 
-router.post('/statue', urlencodedParser, function(req, res) {
-  if (firebase.hasLoggedIn()) {
+router.post('/statue', function(req, res) {
+  firebase.removeStatue(req.body.statueId);
+  res.redirect('/');
+});
+
+router.post('/statue-flag', function(req, res) {
     firebase.removeStatue(req.body.statueId);
     res.redirect('/');
-  } else {
-    res.redirect('/login');
-  }
 });
 
 router.get('/login', function(req, res) {
-  if (firebase.hasLoggedIn()) {
-    res.redirect('/');
-  } else {
-    const err = req.session.error;
-    delete req.session.error;
-    res.render('login', { error: err });
-  }
+  const err = req.session.error;
+  delete req.session.error;
+  res.render('login', { error: err });
 });
 
-router.post('/login', urlencodedParser, function(req, res) {
+router.post('/login', function(req, res) {
   if (!req.body) {
 
   };
