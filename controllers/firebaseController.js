@@ -5,6 +5,7 @@ module.exports = {
   getUser: getUser,
   getStatues: getStatues,
   removeStatue: removeStatue,
+  toggleStatueFlag: toggleStatueFlag,
 }
 
 const firebase = require('firebase');
@@ -38,6 +39,11 @@ function getStatues(callback) {
 
 function removeStatue(sId) {
   return firebase.database().ref('/Statues/' + sId).remove();
+}
+
+function toggleStatueFlag(sId, isFlagged) {
+  const toggledFlag = isFlagged == 0 ? 1 : 0;
+  return firebase.database().ref(`/Statues/${sId}`).update({ isFlagged: toggledFlag });
 }
 
 function login(email, password, callback) {

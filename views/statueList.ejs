@@ -32,6 +32,7 @@
                   </form>
                   <form action="/statue-flag" method="post">
                     <input type="hidden" name="statueId" value="<%= sId %>">
+                    <input type="hidden" name="isFlagged" value="<%= statues[sId].isFlagged %>">
                     <button id="flagBtn" type="submit" class="btn alert-danger remove-btn" data-statue-name="<%= statues[sId].name %>">
                       <%= statues[sId].isFlagged === 1 ? 'Unflag' : 'Flag' %>
                     </button>

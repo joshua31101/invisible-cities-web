@@ -16,8 +16,10 @@ router.post('/statue', function(req, res) {
 });
 
 router.post('/statue-flag', function(req, res) {
-    firebase.removeStatue(req.body.statueId);
-    res.redirect('/');
+  const isFlagged = req.body.isFlagged;
+  const statueId = req.body.statueId;
+  firebase.toggleStatueFlag(statueId, isFlagged);
+  res.redirect('/');
 });
 
 router.get('/login', function(req, res) {
