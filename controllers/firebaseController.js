@@ -32,18 +32,18 @@ function getUser() {
 }
 
 function getStatues(callback) {
-  return firebase.database().ref('/Statues').once('value').then(function(snapshot) {
+  return firebase.database().ref('/statues').once('value').then(function(snapshot) {
     callback(snapshot.val());
   });
 }
 
 function removeStatue(sId) {
-  return firebase.database().ref('/Statues/' + sId).remove();
+  return firebase.database().ref('/statues/' + sId).remove();
 }
 
 function toggleStatueFlag(sId, isFlagged) {
   const toggledFlag = isFlagged == 0 ? 1 : 0;
-  return firebase.database().ref(`/Statues/${sId}`).update({ isFlagged: toggledFlag });
+  return firebase.database().ref(`/statues/${sId}`).update({ isFlagged: toggledFlag });
 }
 
 function login(email, password, callback) {
