@@ -10,6 +10,12 @@ router.get('/', function(req, res) {
   });
 });
 
+router.get('/campus-map', function(req, res) {
+  firebase.getMaps(function(maps) {
+    res.render('campus-map', { maps: maps });
+  });
+});
+
 router.post('/statue', function(req, res) {
   firebase.removeStatue(req.body.statueId);
   res.redirect('/');

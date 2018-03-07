@@ -6,6 +6,7 @@ module.exports = {
   getStatues: getStatues,
   removeStatue: removeStatue,
   toggleStatueFlag: toggleStatueFlag,
+  getMaps: getMaps,
 }
 
 const firebase = require('firebase');
@@ -33,6 +34,12 @@ function getUser() {
 
 function getStatues(callback) {
   return firebase.database().ref('/statues').once('value').then(function(snapshot) {
+    callback(snapshot.val());
+  });
+}
+
+function getMaps(callback) {
+  return firebase.database().ref('/maps').once('value').then(function(snapshot) {
     callback(snapshot.val());
   });
 }

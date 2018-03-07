@@ -16,12 +16,14 @@
       <% } %>
     </div>
   </section>
-  <section class="navbar menu-navbar">
-    <div class="container">
-      <ul>
-        <li><a class="btn" href="/">Statues</a></li>
-        <li><a class="btn" href="/campus-map">Campus Map</a></li>
-      </ul>
-    </div>
-  </section>
+  <% if (hasLoggedIn) { %>
+    <section class="navbar menu-navbar">
+      <div class="container">
+        <ul>
+          <li><a class="btn" href="/">Statues</a></li>
+          <li><a class="btn" href="/campus-map">Campus Map</a></li>
+        </ul>
+      </div>
+    </section>
+  <% } %>
 </header>

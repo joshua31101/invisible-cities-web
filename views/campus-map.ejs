@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include partials/head %>
+  <link rel="stylesheet" href="/css/campus-map.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+  <main>
+    <div class="jumbotron text-center">
+      <h1>Campus Map</h1>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div id="map"></div>
+      </div>
+    </div>
+  </main>
+  <% include partials/footer %>
+</body>
+  <script>
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: {
+          lat: 33.777993,
+          lng: -84.398108
+        }
+      });
+      let marker;
+      <% Object.keys(maps).forEach((m, i) => { %>
+        marker = new google.maps.Marker({
+          position: {
+            lat: <%= maps[m].lat %>,
+            lng: <%= maps[m].lng %>
+          },
+          map: map
+        });
+      <% }) %>
+
+      google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+
+    }
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-126jQxDJMWuci63ka1o_NtHoWogIudk&callback=initMap">
+  </script>
+</html>
