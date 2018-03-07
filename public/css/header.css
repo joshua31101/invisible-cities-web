@@ -9,3 +9,19 @@
   .gt-navbar .btn-logout {
     margin: 8px;
     float: right; }
+
+.menu-navbar {
+  padding: 0;
+  background-color: #EEB211; }
+  .menu-navbar ul {
+    margin: 0;
+    padding: 0; }
+    .menu-navbar ul > li {
+      display: inline-block; }
+    .menu-navbar ul a {
+      border-radius: 0;
+      color: #262626; }
+      .menu-navbar ul a:hover {
+        background: none repeat scroll 0 0 #262626;
+        color: #FFFFFF;
+        transition: background 0.3s ease 0s; }

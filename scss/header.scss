@@ -13,3 +13,23 @@
     float: right;
   }
 }
+.menu-navbar {
+  padding: 0;
+  background-color: #EEB211;
+  ul {
+    margin: 0;
+    padding: 0;
+    > li {
+      display: inline-block;
+    }
+    a {
+      border-radius: 0;
+      color: #262626;
+      &:hover {
+        background: none repeat scroll 0 0 #262626;
+        color: #FFFFFF;
+        transition: background 0.3s ease 0s;
+      }
+    }
+  }
+}

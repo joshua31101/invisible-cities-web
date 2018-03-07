@@ -10,34 +10,82 @@
     margin: 8px;
     float: right; }
 
+.menu-navbar {
+  padding: 0;
+  background-color: #EEB211; }
+  .menu-navbar ul {
+    margin: 0;
+    padding: 0; }
+    .menu-navbar ul > li {
+      display: inline-block; }
+    .menu-navbar ul a {
+      border-radius: 0;
+      color: #262626; }
+      .menu-navbar ul a:hover {
+        background: none repeat scroll 0 0 #262626;
+        color: #FFFFFF;
+        transition: background 0.3s ease 0s; }
+
+.gt-navbar {
+  background-color: #262626; }
+
+.gt-navbar img {
+  width: 100%;
+  height: auto; }
+
+.gt-navbar h1 {
+  display: inline-block;
+  color: #fff; }
+
+.gt-navbar .btn-logout {
+  margin: 8px;
+  float: right; }
+
 footer {
   padding: 10px;
   background-color: #e6B340; }
-  footer img {
-    width: 170px; }
-  footer p.copyright {
-    font-size: .786em;
-    line-height: 1.1;
-    margin: 0 0 6px 0; }
-  footer .footer-links ul {
-    margin: 2em 0px; }
-  footer .footer-links li {
-    display: inline;
-    font-size: .786em;
-    padding: 2px 0 2px 10px;
-    margin: 0 0 2px; }
-    footer .footer-links li a {
-      text-decoration: none;
-      color: #262626; }
-    footer .footer-links li::after {
-      content: "";
-      display: inline-block;
-      border: 0.1em solid #808080;
-      border-right: none;
-      border-bottom: none;
-      border-top: none;
-      margin-left: 10px;
-      height: 1em; }
+
+footer img {
+  width: 170px; }
+
+footer p.copyright {
+  font-size: .786em;
+  line-height: 1.1;
+  margin: 0 0 6px 0; }
+
+footer .footer-links ul {
+  margin: 2em 0px; }
+
+footer .footer-links li {
+  display: inline;
+  font-size: .786em;
+  padding: 2px 0 2px 10px;
+  margin: 0 0 2px; }
+
+footer .footer-links li a {
+  text-decoration: none;
+  color: #262626; }
+
+footer .footer-links li::after {
+  content: "";
+  display: inline-block;
+  border: 0.1em solid #808080;
+  border-right: none;
+  border-bottom: none;
+  border-top: none;
+  margin-left: 10px;
+  height: 1em; }
+
+img {
+  max-width: 100%; }
+
+main {
+  min-height: 80vh; }
+
+.jumbotron {
+  margin: 0;
+  padding: 25px 0;
+  background-color: #fff; }
 
 img {
   max-width: 100%; }
