@@ -14,32 +14,7 @@
       <div class="row">
         <% for (let sId in statues) { %>
           <div class="card-container col-sm-4">
-            <div class="card">
-              <img class="card-img-top" src="<%= statues[sId].image %>" alt="<%= statues[sId].name %>">
-              <div class="card-body">
-                <h5 class="card-title"><%= statues[sId].name %></h5>
-                <h6 class="card-subtitle mb-2 text-muted"><%= statues[sId].statueAsset %></h6>
-                <p class="card-text"><%= statues[sId].description %></p>
-                <div class="statue-info-container">
-                  <p class="statue-info">Like: <span><%= statues[sId].like %></span></p>
-                  <p class="statue-info">Dislike: <span><%= statues[sId].dislike %></span></p>
-                  <p class="statue-info">Flagged: <span><%= statues[sId].isFlagged === 1 %></span></p>
-                </div>
-                <div class="button-container">
-                  <form action="/statue" method="post">
-                    <input type="hidden" name="statueId" value="<%= sId %>">
-                    <button id="removeBtn" type="submit" class="btn alert-danger remove-btn" data-statue-name="<%= statues[sId].name %>">Remove</button>
-                  </form>
-                  <form action="/statue-flag" method="post">
-                    <input type="hidden" name="statueId" value="<%= sId %>">
-                    <input type="hidden" name="isFlagged" value="<%= statues[sId].isFlagged %>">
-                    <button id="flagBtn" type="submit" class="btn alert-danger remove-btn" data-statue-name="<%= statues[sId].name %>">
-                      <%= statues[sId].isFlagged === 1 ? 'Unflag' : 'Flag' %>
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
+            <%- include('partials/statueCard', { statue: statues[sId], statueId: sId }) %>
           </div>
         <% } %>
       </div>

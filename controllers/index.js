@@ -16,16 +16,31 @@ router.get('/campus-map', function(req, res) {
   });
 });
 
+router.get('/statue/:id', function(req, res) {
+  const sId = req.params.id;
+  firebase.getStatue(sId, function(statue) {
+    res.status(200).send({ statue: statue });
+  });
+});
+
 router.post('/statue', function(req, res) {
-  firebase.removeStatue(req.body.statueId);
-  res.redirect('/');
+  const statueId = req.body.statueId;
+  firebase.removeStatue(statueId);
+  if (req.body.isJson) {
+    return res.status(200).send({ statueId: statueId });
+  }
+  return res.redirect('/');
 });
 
 router.post('/statue-flag', function(req, res) {
   const isFlagged = req.body.isFlagged;
   const statueId = req.body.statueId;
   firebase.toggleStatueFlag(statueId, isFlagged);
-  res.redirect('/');
+  if (req.body.isJson) {
+    console.log(isFlagged);
+    return res.status(200).send({ isFlagged: isFlagged != 1, statueId: statueId });
+  }
+  return res.redirect('/');
 });
 
 router.get('/login', function(req, res) {
