@@ -24,6 +24,10 @@
 </body>
 <script type="text/javascript">
   $(document).ready(function() {
+    $('img').error(function(){
+      $(this).hide();
+    });
+
     $('#removeBtnForm').click(function(ev) {
       ev.preventDefault();
       let errMsg = 'Are you sure that you want to delete statue:' + ev.target.dataset['statueName'] + '?';
