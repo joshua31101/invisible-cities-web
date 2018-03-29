@@ -33,12 +33,21 @@ router.post('/statue', function(req, res) {
 });
 
 router.post('/statue-flag', function(req, res) {
-  const isFlagged = req.body.isFlagged;
+  const isFlagged = req.body.isFlagged === 'true' ? true : false;
   const statueId = req.body.statueId;
   firebase.toggleStatueFlag(statueId, isFlagged);
   if (req.body.isJson) {
-    console.log(isFlagged);
-    return res.status(200).send({ isFlagged: isFlagged != 1, statueId: statueId });
+    return res.status(200).send({ isFlagged: !isFlagged, statueId: statueId });
+  }
+  return res.redirect('/');
+});
+
+router.post('/statue-private', function(req, res) {
+  const isPrivate = req.body.isPrivate === 'true' ? true : false;
+  const statueId = req.body.statueId;
+  firebase.toggleStatuePrivate(statueId, isPrivate);
+  if (req.body.isJson) {
+    return res.status(200).send({ isPrivate: !isPrivate, statueId: statueId });
   }
   return res.redirect('/');
 });

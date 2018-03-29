@@ -7,6 +7,7 @@ module.exports = {
   getStatue: getStatue,
   removeStatue: removeStatue,
   toggleStatueFlag: toggleStatueFlag,
+  toggleStatuePrivate: toggleStatuePrivate,
   getMaps: getMaps,
 }
 
@@ -57,8 +58,11 @@ function removeStatue(sId) {
 }
 
 function toggleStatueFlag(sId, isFlagged) {
-  const toggledFlag = isFlagged == 0 ? 1 : 0;
-  return firebase.database().ref(`/statues/${sId}`).update({ isFlagged: toggledFlag });
+  return firebase.database().ref(`/statues/${sId}`).update({ isFlagged: !isFlagged });
+}
+
+function toggleStatuePrivate(sId, isPrivate) {
+  return firebase.database().ref(`/statues/${sId}`).update({ isPrivate: !isPrivate });
 }
 
 function login(email, password, callback) {

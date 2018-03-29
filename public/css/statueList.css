@@ -15,5 +15,16 @@ form {
     color: #721c24;
     font-weight: bold; }
 
+.option-container {
+  margin-bottom: 0.5em;
+  overflow: hidden; }
+  .option-container form {
+    float: right; }
+    .option-container form button {
+      padding: 0.5em 1em;
+      font-size: 0.8em; }
+
 .button-container {
   text-align: right; }
+  .button-container button {
+    font-size: 0.8em; }

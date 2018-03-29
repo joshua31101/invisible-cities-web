@@ -16,6 +16,20 @@ form {
     font-weight: bold;
   }
 }
+.option-container {
+  margin-bottom: 0.5em;
+  overflow: hidden;
+  form {
+    float: right;
+    button {
+      padding: 0.5em 1em;
+      font-size: 0.8em;
+    }
+  }
+}
 .button-container {
   text-align: right;
+  button {
+    font-size: 0.8em;
+  }
 }

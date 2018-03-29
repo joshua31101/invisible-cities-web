@@ -8,12 +8,12 @@
   <%- include('partials/header') %>
   <main>
     <div class="jumbotron text-center">
-      <h1>Statue Lists</h1>
+      <h1>Statue List</h1>
     </div>
     <div class="container">
       <div class="row">
         <% for (let sId in statues) { %>
-          <div class="card-container col-sm-4">
+          <div class="card-container col-md-6 col-lg-4">
             <%- include('partials/statueCard', { statue: statues[sId], statueId: sId }) %>
           </div>
         <% } %>
