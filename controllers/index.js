@@ -33,7 +33,7 @@ router.post('/statue', function(req, res) {
 });
 
 router.post('/statue-flag', function(req, res) {
-  const isFlagged = req.body.isFlagged === 'true' ? true : false;
+  const isFlagged = JSON.parse(req.body.isFlagged);
   const statueId = req.body.statueId;
   firebase.toggleStatueFlag(statueId, isFlagged);
   if (req.body.isJson) {
@@ -43,7 +43,7 @@ router.post('/statue-flag', function(req, res) {
 });
 
 router.post('/statue-private', function(req, res) {
-  const isPrivate = req.body.isPrivate === 'true' ? true : false;
+  const isPrivate = JSON.parse(req.body.isPrivate);
   const statueId = req.body.statueId;
   firebase.toggleStatuePrivate(statueId, isPrivate);
   if (req.body.isJson) {
