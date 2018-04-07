@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Website for Invisible Cities from Georgia Tech Arts@Tech.",
   "main": "server.js",
+  "proxy": "http://localhost:5000/",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
     "build-css": "node-sass --include-path scss scss/*   public/css/*",
     "watch-css": "node-sass -w scss/ -o public/css/"
   },
@@ -20,7 +22,8 @@
   "homepage": "https://github.com/joshua31101/invisible-cities-web#readme",
   "devDependencies": {
     "node-sass": "^4.7.2",
-    "nodemon": "^1.14.11"
+    "nodemon": "^1.14.11",
+    "concurrently": "^3.5.1"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -28,6 +31,12 @@
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
-    "firebase": "^4.8.2"
+    "firebase": "^4.8.2",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.1",
+    "redux": "^3.7.2"
   }
 }
