@@ -12,21 +12,23 @@
     </div>
     <div class="container">
       <div class="row">
-        <% for (let sId in statues) { %>
-          <div class="card-container col-md-6 col-lg-4">
-            <%- include('partials/statueCard', { statue: statues[sId], statueId: sId }) %>
+        <div id="app">
+          <div class="card-container col-md-6 col-lg-4" v-for="(statue, id) in statues">
+            <statue-card v-bind:statue="statue" v-bind:statueId="id"></statue-card>
           </div>
-        <% } %>
+        </div>
       </div>
     </div>
   </main>
   <% include partials/footer %>
+  <script type="module" src="./components/StatueCard.js"></script>
+  <script type="module" src="./vue/statueList.js"></script>
 </body>
 <script type="text/javascript">
   $(document).ready(function() {
-    $('img').error(function(){
-      $(this).hide();
-    });
+    // $('img').error(function(){
+    //   $(this).hide();
+    // });
 
     $('#removeBtnForm').click(function(ev) {
       ev.preventDefault();
@@ -35,6 +37,7 @@
         $(this).unbind('submit').submit();
       }
     });
-  })
+
+  });
 </script>
 </html>

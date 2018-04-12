@@ -3,11 +3,7 @@ const router = express.Router();
 const firebase = require('./firebaseController');
 
 router.get('/', function(req, res) {
-  firebase.getStatues(function(statues) {
-    res.render('statueList', {
-      statues: statues
-    });
-  });
+  res.render('statueList');
 });
 
 router.get('/campus-map', function(req, res) {

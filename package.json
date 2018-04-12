@@ -28,6 +28,7 @@
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
-    "firebase": "^4.8.2"
+    "firebase": "^4.8.2",
+    "vue-resource": "^1.5.0"
   }
 }

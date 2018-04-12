@@ -42,6 +42,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(require('./controllers'));
+app.use(require('./api'));
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
