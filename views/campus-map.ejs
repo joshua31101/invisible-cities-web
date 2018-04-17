@@ -121,9 +121,11 @@
           url: '/statue/' + marker.id,
           success: function(data) {
             const statue = data.statue;
+            const previewPicURL = statue.statuePreviewPicURL;
+            const imageURL = previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96);
             const str =
               '<div class="card" ' + ' id="statue-' + marker.id + '"' + '>' +
-                '<img class="card-img-top" src="' + statue.statuePreviewPicURL + '" alt="' + statue.name + '">' +
+                '<img class="card-img-top" src="' + imageURL + '" alt="' + statue.name + '">' +
                 '<div class="card-body">' +
                   '<h5 class="card-title">' + statue.name + '</h5>' +
                   '<h6 class="card-subtitle mb-2 text-muted">' + statue.statueAsset + '</h6>' +
