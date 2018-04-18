@@ -37,13 +37,12 @@
         },
         success: function(data) {
           const statueId = data.statueId;
-          const $statueCard = $('#statue-' + statueId);
+          const $statueCard = $('#statue' + statueId);
           $statueCard.find('.text-flag')[0].innerText = data.isFlagged;
           $statueCard.find('.flag-btn')[0].innerText = data.isFlagged ? 'Unflag' : 'Flag';
           $statueCard.find('input[name=isFlagged]').val(data.isFlagged);
         },
         error: function(xhr) {
-
         }
       });
     });
@@ -63,7 +62,7 @@
         },
         success: function(data) {
           const statueId = data.statueId;
-          const $statueCard = $('#statue-' + statueId);
+          const $statueCard = $('#statue' + statueId);
           $statueCard.find('.text-private')[0].innerText = data.isPrivate ? 'Private' : 'Public';
           $statueCard.find('.private-btn')[0].innerText = data.isPrivate ? 'Set public' : 'Set private';
           $statueCard.find('input[name=isPrivate]').val(data.isPrivate);
@@ -124,7 +123,7 @@
             const previewPicURL = statue.statuePreviewPicURL;
             const imageURL = previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96);
             const str =
-              '<div class="card" ' + ' id="statue-' + marker.id + '"' + '>' +
+              '<div class="card" ' + ' id="statue' + marker.id + '"' + '>' +
                 '<img class="card-img-top" src="' + imageURL + '" alt="' + statue.name + '">' +
                 '<div class="card-body">' +
                   '<h5 class="card-title">' + statue.name + '</h5>' +
