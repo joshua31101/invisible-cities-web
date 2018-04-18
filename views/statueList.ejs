@@ -12,7 +12,9 @@
     </div>
     <div class="container">
       <div class="row">
-        <% for (let sId in statues) { %>
+        <% statueKeys = Object.keys(statues) %>
+        <% for (var i = statueKeys.length - 1; i >= 0; i--) { %>
+          <% const sId = statueKeys[i] %>
           <% const previewPicURL = statues[sId].statuePreviewPicURL; %>
           <div class="card-container col-md-6 col-lg-4">
             <%- include('partials/statueCard', {
