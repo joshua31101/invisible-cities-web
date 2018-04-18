@@ -30,9 +30,9 @@
       </div>
     </div>
     <div class="button-container">
-      <form action="/statue" method="post">
+      <form action="/statue" method="post" class="statue-remove-form" data-statue-name="<%= statue.name %>">
         <input type="hidden" name="statueId" value="<%= statueId %>">
-        <button id="removeBtn" type="submit" class="btn alert-danger remove-btn" data-statue-name="<%= statue.name %>">Remove</button>
+        <button id="removeBtn" type="submit" class="btn alert-danger remove-btn">Remove</button>
       </form>
     </div>
   </div>

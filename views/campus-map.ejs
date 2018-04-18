@@ -75,22 +75,26 @@
 
     $('#map').on('submit', '.statue-remove-form', function(ev) {
       ev.preventDefault();
-      const $this = $(ev.target);
-      const statueId = $this.find('input[name=statueId]').val();
-      $.ajax({
-        url: '/statue',
-        method: 'POST',
-        data: {
-          statueId: statueId,
-          isJson: 1
-        },
-        success: function(data) {
-          location.reload();
-        },
-        error: function(xhr) {
+      let errMsg = 'Are you sure that you want to delete statue: \n\n' + ev.target.dataset['statueName'] + '?';
+      if (confirm(errMsg)) {
+        const $this = $(ev.target);
+        const statueId = $this.find('input[name=statueId]').val();
+        $.ajax({
+          url: '/statue',
+          method: 'POST',
+          data: {
+            statueId: statueId,
+            isJson: 1
+          },
+          success: function(data) {
+            location.reload();
+          },
+          error: function(xhr) {
 
-        }
-      });
+          }
+        });
+      }
+
     });
 
   });
@@ -114,14 +118,14 @@
         id: "<%= m %>"
       });
 
-      marker.addListener('mouseover', (function(marker, i) {
+      marker.addListener('click', (function(marker, i) {
         marker = this;
         $.ajax({
           url: '/statue/' + marker.id,
           success: function(data) {
             const statue = data.statue;
             const previewPicURL = statue.statuePreviewPicURL;
-            const imageURL = previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96);
+            const imageURL = previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : '';
             const str =
               '<div class="card" ' + ' id="statue' + marker.id + '"' + '>' +
                 '<img class="card-img-top" src="' + imageURL + '" alt="' + statue.name + '">' +
@@ -153,9 +157,9 @@
                     '</div>' +
                   '</div>' +
                   '<div class="button-container">' +
-                    '<form class="statue-remove-form" action="/statue" method="post">' +
+                    '<form class="statue-remove-form" action="/statue" method="post" data-statue-name="' + statue.name + '">' +
                       '<input type="hidden" name="statueId" value="' + marker.id + '">' +
-                      '<button class="remove-btn btn alert-danger" type="submit" class="btn alert-danger remove-btn" data-statue-name="' + statue.name + '">Remove</button>' +
+                      '<button class="remove-btn btn alert-danger" type="submit" class="btn alert-danger remove-btn">Remove</button>' +
                     '</form>' +
                   '</div>' +
                 '</div>' +

@@ -54,6 +54,7 @@ function getMaps(callback) {
 
 function removeStatue(sId) {
   firebase.database().ref('/maps/' + sId).remove();
+  firebase.database().ref('/ratings/' + sId).remove();
   return firebase.database().ref('/statues/' + sId).remove();
 }
 

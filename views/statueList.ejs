@@ -20,7 +20,7 @@
             <%- include('partials/statueCard', {
               statue: statues[sId],
               statueId: sId,
-              previewPicURL: previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96)
+              previewPicURL: previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : ''
             }) %>
           </div>
         <% } %>
@@ -31,13 +31,10 @@
 </body>
 <script type="text/javascript">
   $(document).ready(function() {
-    $('img').error(function(){
-      $(this).hide();
-    });
 
-    $('#removeBtnForm').click(function(ev) {
+    $('.statue-remove-form').submit(function(ev) {
       ev.preventDefault();
-      let errMsg = 'Are you sure that you want to delete statue:' + ev.target.dataset['statueName'] + '?';
+      let errMsg = 'Are you sure that you want to delete statue: \n\n' + ev.target.dataset['statueName'] + '?';
       if (confirm(errMsg)) {
         $(this).unbind('submit').submit();
       }
