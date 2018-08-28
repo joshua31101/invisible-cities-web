@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
 
 router.get('/campus-map', function(req, res) {
   firebase.getMaps(function(maps) {
-    res.render('campus-map', { maps: maps });
+    res.render('campusMap', { maps: maps });
   });
 });
 
