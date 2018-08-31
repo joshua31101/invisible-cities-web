@@ -19,15 +19,15 @@
   },
   "homepage": "https://github.com/joshua31101/invisible-cities-web#readme",
   "devDependencies": {
-    "node-sass": "^4.7.2",
-    "nodemon": "^1.14.11"
+    "node-sass": "^4.9.3",
+    "nodemon": "^1.18.4"
   },
   "dependencies": {
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
     "dotenv": "^4.0.0",
-    "ejs": "^2.5.7",
-    "express": "^4.16.2",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "firebase": "^4.8.2"
+    "firebase": "^4.13.1"
   }
 }
