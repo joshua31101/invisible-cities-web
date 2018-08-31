@@ -48,4 +48,5 @@ FIREBASE_MSG_SENDER_ID=
 * `/views/partials/head.ejs`
 * `/views/partials/header.ejs`
 5) Check if the website works properly in [http://localhost:5000](http://localhost:5000)
-6) Follow steps in `https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app`
+6) Follow steps in [https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app](https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app)
+7) In Heroku dashboard, go the `settings` and click `Reveal Config Vars`. Fill in `.env` keys and values in the blanks.
