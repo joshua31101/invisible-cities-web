@@ -7,25 +7,71 @@
 <body>
   <%- include('partials/header') %>
   <main>
-    <div class="jumbotron text-center">
+    <div class="jumbotron text-center col-sm-8 mx-auto mb-4">
       <h1>Statue List</h1>
+      <form action="/statue/search" method="GET" class="col-sm-12">
+        <div class="input-group mt-3 mb-3">
+          <select name="searchCategory" class="col-sm-3 custom-select">
+            <option value="name" <%= searchCategory && searchCategory === 'name' ? 'selected' : '' %>>Name</option>
+            <option value="description" <%= searchCategory && searchCategory === 'description' ? 'selected' : '' %>>Description</option>
+          </select>
+          <input type="text" name="q" value="<%= query ? query : '' %>" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-statue" />
+          <div class="input-group-append">
+            <input type="submit" value="Search" class="btn btn-outline-secondary" />
+          </div>
+        </div>
+      </form>
+      <div id="filterSort" class="col-sm-12 text-right">
+        <div class="filter-container">
+          <label for="filter">Filter by </label>
+          <div id="filter" class="ml-2 d-inline">
+            <div class="filter-flag-container btn-group ml-2" role="group" aria-label="filter by flag">
+              <button type="button" class="btn btn-outline-secondary" data-filter="flagged">Flagged</button>
+              <button type="button" class="btn btn-outline-secondary" data-filter="unflagged">Unflagged</button>
+            </div>
+            <div class="filter-visibility-container btn-group ml-2" role="group" aria-label="filter by visibility">
+              <button type="button" class="btn btn-outline-secondary" data-filter="private">Private</button>
+              <button type="button" class="btn btn-outline-secondary" data-filter="public">Public</button>
+            </div>
+          </div>
+        </div>
+        <div class="sorting-container mt-2">
+          <label for="sort">sort by </label>
+          <div id="sort" class="btn-group ml-2" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-outline-secondary" data-sort="likes">Like</button>
+            <button type="button" class="btn btn-outline-secondary" data-sort="dislikes">Dislike</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="container">
-      <div class="row">
-        <% statueKeys = Object.keys(statues) %>
-        <% for (var i = statueKeys.length - 1; i >= 0; i--) { %>
-          <% const sId = statueKeys[i] %>
-          <% const previewPicURL = statues[sId].statuePreviewPicURL; %>
-          <div class="card-container col-md-6 col-lg-4">
-            <%- include('partials/statueCard', {
-              statue: statues[sId],
-              statueId: sId,
-              previewPicURL: previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : ''
-            }) %>
-          </div>
+      <div class="row multiple-cards-container">
+        <% if (statues) { %>
+          <% statueKeys = Object.keys(statues) %>
+          <% for (var i = statueKeys.length - 1; i >= 0; i--) { %>
+            <% const sId = statueKeys[i]; %>
+            <% const previewPicURL = statues[sId].statuePreviewPicURL; %>
+            <% const isFlagged = statues[sId].isFlagged; %>
+            <% const isPrivate = statues[sId].isPrivate; %>
+            <% const likesCount = statues[sId].like; %>
+            <% const dislikesCount = statues[sId].dislike; %>
+            <div class="card-container col-md-6 col-lg-4"
+              data-groups='["<%= isFlagged ? "flagged" : "unflagged" %>", "<%= isPrivate ? "private" : "public" %>"]'
+              data-likes-count="<%= likesCount %>"
+              data-dislikes-count="<%= dislikesCount %>">
+              <%- include('partials/statueCard', {
+                statue: statues[sId],
+                statueId: sId,
+                previewPicURL: previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : ''
+              }) %>
+            </div>
+          <% } %>
+        <% } else { %>
+          <h3>No statues found..</h3>
         <% } %>
       </div>
     </div>
+    <div class="col-md-6 col-lg-4 sizer"></div>
   </main>
   <% include partials/footer %>
 </body>
@@ -39,6 +85,69 @@
         $(this).unbind('submit').submit();
       }
     });
-  })
+
+    const Shuffle = window.Shuffle;
+    const element = $('.multiple-cards-container');
+    const shuffleInstance = new Shuffle(element, {
+      itemSelector: '.card-container',
+      sizer: '.sizer',
+      filterMode: Shuffle.FilterMode.All,
+    });
+
+    $('#filterSort').click(function(e) {
+      const $clickedButton = $(e.target);
+      const filterBy = $clickedButton.data('filter');
+      const sortBy = $clickedButton.data('sort');
+      const isActive = $clickedButton.hasClass('active');
+
+      const $resetButton = $clickedButton.siblings();
+      const resetFilter = $resetButton.data('filter');
+      const resetSort = $resetButton.data('sort');
+      const isResetButtonActive = $resetButton.hasClass('active');
+      if (isResetButtonActive) {
+        $resetButton.removeClass('active');
+        if (resetFilter) {
+          shuffleInstance.filter();
+        } else {
+          shuffleInstance.sort();
+        }
+      }
+
+      if (filterBy) {
+        const $buttonContainer = $clickedButton.parent();
+        const isFlagFilter = $buttonContainer.hasClass('filter-flag-container');
+        let savedFilter = '';
+        if (isFlagFilter) {
+          savedFilter = $('.filter-visibility-container').find('.active').data('filter');
+        } else {
+          savedFilter = $('.filter-flag-container').find('.active').data('filter');
+        }
+        if (isActive) {
+          $clickedButton.removeClass('active');
+          shuffleInstance.filter(savedFilter);
+        } else {
+          $clickedButton.addClass('active');
+          savedFilter ? shuffleInstance.filter([savedFilter, filterBy]) : shuffleInstance.filter([filterBy]);
+        }
+      } else if (sortBy) {
+        let options = {};
+        if (isActive) {
+          $clickedButton.removeClass('active');
+        } else {
+          $clickedButton.addClass('active');
+          options = {
+            by: sortBy
+          };
+        }
+        shuffleInstance.sort({
+          compare: function (a, b) {
+            const sortA = parseInt(a.element.getAttribute(`data-${sortBy}-count`));
+            const sortB = parseInt(b.element.getAttribute(`data-${sortBy}-count`));
+            return sortB - sortA;
+          },
+        });
+      }
+    });
+  });
 </script>
 </html>
