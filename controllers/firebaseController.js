@@ -4,6 +4,7 @@ module.exports = {
   logout: logout,
   getUser: getUser,
   getStatues: getStatues,
+  searchStatues: searchStatues,
   getStatue: getStatue,
   removeStatue: removeStatue,
   toggleStatueFlag: toggleStatueFlag,
@@ -36,6 +37,12 @@ function getUser() {
 
 function getStatues(callback) {
   return firebase.database().ref('/statues').once('value').then(function(snapshot) {
+    callback(snapshot.val());
+  });
+}
+
+function searchStatues(query, searchCategory, callback) {
+  return firebase.database().ref('/statues').orderByChild(searchCategory).startAt(query).once("value").then(function(snapshot) {
     callback(snapshot.val());
   });
 }

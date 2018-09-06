@@ -5,7 +5,22 @@ const firebase = require('./firebaseController');
 router.get('/', function(req, res) {
   firebase.getStatues(function(statues) {
     res.render('statueList', {
-      statues: statues
+      statues: statues,
+      query: null,
+      searchCategory: null,
+    });
+  });
+});
+
+router.get('/statue/search', function(req, res) {
+  const query = req.query.q;
+  const searchCategory = req.query.searchCategory;
+  
+  firebase.searchStatues(query, searchCategory, function(statues) {
+    res.render('statueList', {
+      statues,
+      query,
+      searchCategory,
     });
   });
 });
