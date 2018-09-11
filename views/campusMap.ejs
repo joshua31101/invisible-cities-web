@@ -467,6 +467,6 @@
   }
 </script>
   <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-126jQxDJMWuci63ka1o_NtHoWogIudk&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.NODE_ENV === 'production' ? 'AIzaSyDAoa3AC0rswHP4W5R17Po4UQqTEWeqstg' : 'AIzaSyC-126jQxDJMWuci63ka1o_NtHoWogIudk'  %>&callback=initMap">
   </script>
   </html>
