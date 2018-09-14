@@ -454,7 +454,10 @@
                   '</div>' +
                 '</div>' +
               '</div>';
-            
+            const infowindow = new google.maps.InfoWindow({
+              content: str
+            });
+            infowindow.open(map, marker);
           },
           error: function(xhr) {
 
@@ -464,37 +467,35 @@
     <% }) %>
 
 
-const infoWindow = new google.maps.InfoWindow;
-      // Try HTML5 geolocation.
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
+    const userLocationInfoWindow = new google.maps.InfoWindow;
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
 
-          infoWindow.setPosition(pos);
-          infoWindow.setContent('Location found.');
-          infoWindow.open(map);
-          map.setCenter(pos);
-        }, function() {
-          handleLocationError(true, infoWindow, map.getCenter());
-        });
-      } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-      }
-    
+        userLocationInfoWindow.setPosition(pos);
+        userLocationInfoWindow.setContent('Location found.');
+        userLocationInfoWindow.open(map);
+        map.setCenter(pos);
+      }, function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-      infoWindow.setPosition(pos);
-      infoWindow.setContent(browserHasGeolocation ?
+      userLocationInfoWindow.setPosition(pos);
+      userLocationInfoWindow.setContent(browserHasGeolocation ?
                             'Error: The Geolocation service failed.' :
                             'Error: Your browser doesn\'t support geolocation.');
-      infoWindow.open(map);
+      userLocationInfoWindow.open(map);
     }
-        
-  }
+}
 
 </script>
   <script async defer
