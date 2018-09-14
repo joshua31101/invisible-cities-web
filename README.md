@@ -4,6 +4,7 @@ https://invisible-cities-web.herokuapp.com
 
 - [Getting Started](#getting-started)
 - [Folder Structure](#folder-structure)
+- [Deployment](#deployment)
 
 Invisible Cities is a mobile dashboard for collaboratively developing AR monuments and expansive artworks in public squares.
 
@@ -27,3 +28,25 @@ invisible-cities-web/
 * `/controllers` keeps all the controllers/routes.
 * `/views` has all the client-side files.
 * `server.js` is the node.js server entry file.
+
+## Deployment
+1) Fork the repository
+2) Create a file `.env` in root directory and fill in the correspoding keys as below
+```
+SECRET_KEY=
+FIREBASE_API_KEY=
+FIREBASE_AUTH_DOMAIN=
+FIREBASE_DB_URL=
+FIREBASE_PROJECT_ID=
+FIREBASE_STORAGE_BUCKET=
+FIREBASE_MSG_SENDER_ID=
+```
+3) Repeat [Getting Started](#getting-started) steps
+4) Replace header/footer texts, logo images, and footer links in
+* `/public/assets/images`
+* `/views/partials/footer.ejs`
+* `/views/partials/head.ejs`
+* `/views/partials/header.ejs`
+5) Check if the website works properly in [http://localhost:5000](http://localhost:5000)
+6) Follow steps in [https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app](https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app)
+7) In Heroku dashboard, go the `settings` and click `Reveal Config Vars`. Fill in `.env` keys and values in the blanks.
