@@ -22,19 +22,21 @@
         </div>
       </form>
       <div id="filterSort" class="col-sm-12 text-right">
-        <div class="filter-container">
-          <label for="filter">Filter by </label>
-          <div id="filter" class="ml-2 d-inline">
-            <div class="filter-flag-container btn-group ml-2" role="group" aria-label="filter by flag">
-              <button type="button" class="btn btn-outline-secondary" data-filter="flagged">Flagged</button>
-              <button type="button" class="btn btn-outline-secondary" data-filter="unflagged">Unflagged</button>
-            </div>
-            <div class="filter-visibility-container btn-group ml-2" role="group" aria-label="filter by visibility">
-              <button type="button" class="btn btn-outline-secondary" data-filter="private">Private</button>
-              <button type="button" class="btn btn-outline-secondary" data-filter="public">Public</button>
+        <% if (isAdminUser) { %>
+          <div class="filter-container">
+            <label for="filter">Filter by </label>
+            <div id="filter" class="ml-2 d-inline">
+              <div class="filter-flag-container btn-group ml-2" role="group" aria-label="filter by flag">
+                <button type="button" class="btn btn-outline-secondary" data-filter="flagged">Flagged</button>
+                <button type="button" class="btn btn-outline-secondary" data-filter="unflagged">Unflagged</button>
+              </div>
+              <div class="filter-visibility-container btn-group ml-2" role="group" aria-label="filter by visibility">
+                <button type="button" class="btn btn-outline-secondary" data-filter="private">Private</button>
+                <button type="button" class="btn btn-outline-secondary" data-filter="public">Public</button>
+              </div>
             </div>
           </div>
-        </div>
+        <% } %>
         <div class="sorting-container mt-2">
           <label for="sort">sort by </label>
           <div id="sort" class="btn-group ml-2" role="group" aria-label="Basic example">
@@ -62,7 +64,8 @@
               <%- include('partials/statueCard', {
                 statue: statues[sId],
                 statueId: sId,
-                previewPicURL: previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : ''
+                previewPicURL: previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : '',
+                isAdminUser: isAdminUser
               }) %>
             </div>
           <% } %>

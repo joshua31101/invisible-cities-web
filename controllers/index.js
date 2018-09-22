@@ -3,11 +3,14 @@ const router = express.Router();
 const firebase = require('./firebaseController');
 
 router.get('/', function(req, res) {
+  const isAdminUser = req.session.isAdminUser;
+
   firebase.getStatues(function(statues) {
     res.render('statueList', {
       statues: statues,
       query: null,
       searchCategory: null,
+      isAdminUser,
     });
   });
 });
@@ -15,19 +18,26 @@ router.get('/', function(req, res) {
 router.get('/statue/search', function(req, res) {
   const query = req.query.q;
   const searchCategory = req.query.searchCategory;
+  const isAdminUser = req.session.isAdminUser;
   
   firebase.searchStatues(query, searchCategory, function(statues) {
     res.render('statueList', {
       statues,
       query,
       searchCategory,
+      isAdminUser,
     });
   });
 });
 
 router.get('/campus-map', function(req, res) {
+  const isAdminUser = req.session.isAdminUser;
+
   firebase.getMaps(function(maps) {
-    res.render('campusMap', { maps: maps });
+    res.render('campusMap', {
+      maps: maps,
+      isAdminUser,
+    });
   });
 });
 
@@ -81,12 +91,13 @@ router.post('/login', function(req, res) {
   var password = req.body.password;
 
 	firebase.login(email, password,
-    function(error, uid) {
+    function(error, isAdminUser) {
     	if (error) {
         req.session.error = 'Incorrect username or password.';
         res.redirect('/login');
     	} else {
         req.session.email = email;
+        req.session.isAdminUser = isAdminUser;      
     		res.redirect('/');
       }
     }
@@ -100,6 +111,7 @@ router.get('/logout', function(req, res) {
     		return res.status(500).send(error.message);
     	} else {
         delete req.session.email;
+        delete req.session.isAdminUser;
         res.redirect('/');
       }
     }

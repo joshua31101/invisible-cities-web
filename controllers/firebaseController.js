@@ -75,9 +75,13 @@ function toggleStatuePrivate(sId, isPrivate) {
 
 function login(email, password, callback) {
 	firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
-    callback(null, getUser().uid);
+    const uId = getUser().uid;
+    firebase.database().ref('/adminUsers/' + uId).once('value').then(function(snapshot) {
+      const isAdminUser = snapshot.val() ? true : false;
+      callback(null, isAdminUser);
+    })
   }).catch(function(error) {
-    callback(error);
+    callback(error, false);
   })
 }
 
