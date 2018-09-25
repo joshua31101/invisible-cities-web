@@ -6,11 +6,14 @@ router.get('/', function(req, res) {
   const isAdminUser = req.session.isAdminUser;
 
   firebase.getStatues(function(statues) {
-    res.render('statueList', {
-      statues: statues,
-      query: null,
-      searchCategory: null,
-      isAdminUser,
+    firebase.getMaps(function(maps) {
+      res.render('statueList', {
+        statues: statues,
+        isAdminUser,
+        query: null,
+        searchCategory: null,
+        maps: maps,
+      });
     });
   });
 });
@@ -21,11 +24,14 @@ router.get('/statue/search', function(req, res) {
   const isAdminUser = req.session.isAdminUser;
   
   firebase.searchStatues(query, searchCategory, function(statues) {
-    res.render('statueList', {
-      statues,
-      query,
-      searchCategory,
-      isAdminUser,
+    firebase.getMaps(function(maps) {
+      res.render('statueList', {
+        statues: statues,
+        query,
+        searchCategory,
+        isAdminUser,
+        maps: maps,
+      });
     });
   });
 });
@@ -44,7 +50,12 @@ router.get('/campus-map', function(req, res) {
 router.get('/statue/:id', function(req, res) {
   const sId = req.params.id;
   firebase.getStatue(sId, function(statue) {
-    res.status(200).send({ statue: statue });
+    firebase.getMap(sId, function(map) {
+      res.status(200).send({
+        map: map,
+        statue: statue
+      });
+    });
   });
 });
 
@@ -116,7 +127,6 @@ router.get('/logout', function(req, res) {
       }
     }
   );
-
 });
 
 module.exports = router;

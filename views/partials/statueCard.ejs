@@ -30,6 +30,9 @@
           </form>
         </div>
       <% } %>
+      <div id="location-<%= sId %>" class="statue-info">
+        Location: <span></span>
+      </div>
     </div>
     <% if (isAdminUser) { %>
       <div class="button-container">
@@ -41,3 +44,19 @@
     <% } %>
   </div>
 </div>
+
+<script>
+  $.ajax({
+    url: 'https://nominatim.openstreetmap.org/reverse?format=json&lat=<%= map.latitude %>&lon=<%= map.longitude %>&zoom=10',
+    data: 'GET',
+    success: (data) => {
+      const city = data.address.city;
+      const state = data.address.state;
+      if (city != undefined) {
+        $('#location-<%= sId %>').find('span').html(city + ', ' + state);
+      } else {
+        $('#location-<%= sId %>').find('span').html(state);
+      }
+    }
+  })
+</script>
