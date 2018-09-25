@@ -8,6 +8,9 @@
     <div class="statue-info-container">
       <p class="statue-info">Like: <span><%= statue.like %></span></p>
       <p class="statue-info">Dislike: <span><%= statue.dislike %></span></p>
+      <p id="location-<%= sId %>" class="statue-info">
+        Location: <span></span>
+      </p>
       <div class="option-container">
         <span class="statue-info">Flagged: <span class="text-flag"><%= statue.isFlagged %></span></span>
         <form action="/statue-flag" method="post">
@@ -37,3 +40,19 @@
     </div>
   </div>
 </div>
+
+<script>
+  $.ajax({
+    url: 'https://nominatim.openstreetmap.org/reverse?format=json&lat=<%= map.latitude %>&lon=<%= map.longitude %>&zoom=10',
+    data: 'GET',
+    success: (data) => {
+      const city = data.address.city;
+      const state = data.address.state;
+      if (city != undefined) {
+        $('#location-<%= sId %>').find('span').html(city + ', ' + state);
+      } else {
+        $('#location-<%= sId %>').find('span').html(state);
+      }
+    }
+  })
+</script>

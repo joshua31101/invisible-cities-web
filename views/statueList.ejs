@@ -18,7 +18,9 @@
           <% const previewPicURL = statues[sId].statuePreviewPicURL; %>
           <div class="card-container col-md-6 col-lg-4">
             <%- include('partials/statueCard', {
+              sId: sId,
               statue: statues[sId],
+              map: maps[sId],
               statueId: sId,
               previewPicURL: previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : ''
             }) %>

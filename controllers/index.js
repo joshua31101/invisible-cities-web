@@ -4,8 +4,11 @@ const firebase = require('./firebaseController');
 
 router.get('/', function(req, res) {
   firebase.getStatues(function(statues) {
-    res.render('statueList', {
-      statues: statues
+    firebase.getMaps(function(maps) {
+      res.render('statueList', {
+      statues: statues,
+      maps: maps
+    });
     });
   });
 });
@@ -19,7 +22,12 @@ router.get('/campus-map', function(req, res) {
 router.get('/statue/:id', function(req, res) {
   const sId = req.params.id;
   firebase.getStatue(sId, function(statue) {
-    res.status(200).send({ statue: statue });
+    firebase.getMap(sId, function(map) {
+    res.status(200).send({
+      map: map,
+      statue: statue
+    });
+  });
   });
 });
 
