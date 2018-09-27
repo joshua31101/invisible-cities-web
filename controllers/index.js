@@ -38,11 +38,13 @@ router.get('/statue/search', function(req, res) {
 
 router.get('/campus-map', function(req, res) {
   const isAdminUser = req.session.isAdminUser;
+  const mapDesign = require('../public/assets/map-design.json');
 
   firebase.getMaps(function(maps) {
     res.render('campusMap', {
       maps: maps,
       isAdminUser,
+      mapDesign,
     });
   });
 });
