@@ -49,6 +49,62 @@ router.get('/campus-map', function(req, res) {
   });
 });
 
+router.get('/admin', function(req, res) {
+  if (!req.session.isAdminUser) {
+    res.status(500).send('Unauthorized access');
+  }
+  res.render('addAdmin', {
+    userFound: false,
+    email: '',
+    error: '',
+    success: '',
+  });
+});
+
+router.post('/add-admin', function(req, res) {
+  if (!req.session.isAdminUser) {
+    res.status(500).send('Unauthorized access');
+  }
+  const email = req.body.email;
+  if (!email) {
+    res.render('addAdmin', {
+      userFound: false,
+      email: '',
+      error: 'Please enter an email',
+      success: '',
+    });
+  }
+
+  firebase.hasUser(email, function(userFound) {
+    if (userFound) {
+      firebase.addAdminUser(email, function(error) {
+        if (error) {
+          res.render('addAdmin', {
+            userFound,
+            email,
+            error: 'An error occurred',
+            success: '',
+          });
+        } else {
+          res.render('addAdmin', {
+            userFound,
+            email,
+            error: '',
+            success: 'Successfully added!',
+          });
+        }
+      });
+    } else {
+        res.render('addAdmin', {
+          userFound,
+          email,
+          error: 'User is not found',
+          success: '',
+        });
+    }
+  });
+});
+
 router.get('/statue/:id', function(req, res) {
   const sId = req.params.id;
   firebase.getStatue(sId, function(statue) {

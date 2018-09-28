@@ -11,6 +11,8 @@ module.exports = {
   toggleStatuePrivate: toggleStatuePrivate,
   getMaps: getMaps,
   getMap: getMap,
+  hasUser: hasUser,
+  addAdminUser: addAdminUser,
 }
 
 const firebase = require('firebase');
@@ -82,8 +84,8 @@ function toggleStatuePrivate(sId, isPrivate) {
 
 function login(email, password, callback) {
 	firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
-    const uId = getUser().uid;
-    firebase.database().ref('/adminUsers/' + uId).once('value').then(function(snapshot) {
+    const email = getUser().email;
+    firebase.database().ref(`/adminUsers/${_encodeEmail(email)}`).once('value').then(function(snapshot) {
       const isAdminUser = snapshot.val() ? true : false;
       callback(null, isAdminUser);
     })
@@ -99,4 +101,21 @@ function logout(callback) {
   }, function(error) {
     callback(error);
   });
+}
+
+function hasUser(email, callback) {
+  firebase.auth().fetchProvidersForEmail(email).then(providers => {
+    const userFound = providers.length > 0;
+    callback(userFound);
+  });
+}
+
+function addAdminUser(email, callback) {
+  firebase.database().ref(`/adminUsers/${_encodeEmail(email)}`).set('1', function(error) {
+    callback(error);
+  });
+}
+
+function _encodeEmail(email) {
+  return email.replace('.', ',');
 }
