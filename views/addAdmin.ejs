@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include partials/head %>
+</head>
+<body>
+  <%- include('partials/header') %>
+  <main>
+    <div class="jumbotron text-center">
+      <h1>Admin portal</h1>
+    </div>
+
+    <form class="container col-sm-8 row mx-auto" action="/add-admin" method="POST">
+      <% if (success) { %>
+        <div class="alert alert-success w-100 text-center" role="alert">
+          <%= success %>
+        </div>
+      <% } %>
+      <% if (error) { %>
+        <div class="alert alert-danger w-100 text-center" role="alert">
+          <%= error %>
+        </div>
+      <% } %>
+      <div class="input-group mt-3 mb-3">
+        <label for="email" class="p-2">Add an admin: </label>
+        <input id="email" type="text" name="email" value="<%= email ? email : '' %>" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="search-email" />
+        <div class="input-group-append">
+          <input type="submit" value="Search" class="btn btn-outline-secondary" />
+        </div>
+      </div>
+    </form>
+  </main>
+  <% include partials/footer %>
+</body>
+</html>
