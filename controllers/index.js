@@ -66,13 +66,14 @@ router.post('/add-admin', function(req, res) {
     res.status(500).send('Unauthorized access');
   }
   const email = req.body.email;
-  if (!email) {
+  if (!email || (email && !email.includes('@'))) {
     res.render('addAdmin', {
       userFound: false,
       email: '',
       error: 'Please enter an email',
       success: '',
     });
+    return;
   }
 
   firebase.hasUser(email, function(userFound) {
