@@ -106,12 +106,15 @@ function logout(callback) {
 function hasUser(email, callback) {
   firebase.auth().fetchProvidersForEmail(email).then(providers => {
     const userFound = providers.length > 0;
-    callback(userFound);
+    callback(userFound, false);
+  }).catch(error => {
+    callback(false, error);
   });
 }
 
 function addAdminUser(email, callback) {
-  firebase.database().ref(`/adminUsers/${_encodeEmail(email)}`).set('1', function(error) {
+  firebase.database().ref(`/adminUsers/${_encodeEmail(email)}`).set('1').then(() => {
+  }).catch(error => {
     callback(error);
   });
 }

@@ -51,7 +51,7 @@ router.get('/campus-map', function(req, res) {
 
 router.get('/admin', function(req, res) {
   if (!req.session.isAdminUser) {
-    res.status(500).send('Unauthorized access');
+    return res.status(500).send('Unauthorized access');
   }
   res.render('addAdmin', {
     userFound: false,
@@ -63,46 +63,52 @@ router.get('/admin', function(req, res) {
 
 router.post('/add-admin', function(req, res) {
   if (!req.session.isAdminUser) {
-    res.status(500).send('Unauthorized access');
+    return res.status(500).send('Unauthorized access');
   }
   const email = req.body.email;
   if (!email || (email && !email.includes('@'))) {
-    res.render('addAdmin', {
+    return res.render('addAdmin', {
       userFound: false,
       email: '',
       error: 'Please enter an email',
       success: '',
     });
-    return;
   }
 
-  firebase.hasUser(email, function(userFound) {
+  firebase.hasUser(email, function(userFound, error) {
+    if (error) {
+      return res.render('addAdmin', {
+        userFound: false,
+        email: '',
+        error: error.message,
+        success: '',
+      });
+    }
+    
     if (userFound) {
       firebase.addAdminUser(email, function(error) {
         if (error) {
-          res.render('addAdmin', {
+          return res.render('addAdmin', {
             userFound,
             email,
-            error: 'An error occurred',
+            error: error.message,
             success: '',
           });
-        } else {
-          res.render('addAdmin', {
-            userFound,
-            email,
-            error: '',
-            success: 'Successfully added!',
-          });
         }
-      });
-    } else {
-        res.render('addAdmin', {
+        return res.render('addAdmin', {
           userFound,
           email,
-          error: 'User is not found',
-          success: '',
+          error: '',
+          success: 'Successfully added!',
         });
+      });
     }
+    res.render('addAdmin', {
+      userFound,
+      email,
+      error: 'User is not found',
+      success: '',
+    });
   });
 });
 
