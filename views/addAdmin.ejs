@@ -28,6 +28,18 @@
           <input type="submit" value="Search" class="btn btn-outline-secondary" />
         </div>
       </div>
+      <div class="container">
+        <% adminKeys = Object.keys(admins) %>
+        <div class="statue-info-container">
+            <h3>Admins</h4>
+        </div>
+        <% for (var i = adminKeys.length - 1; i >= 0; i--) { %>
+            <% const admin = adminKeys[i].replace(',','.'); %>
+            <div class="statue-info-container">
+              <p class="statue-info"><span><%= admin %></span></p>
+            </div>
+          <% } %>
+      </div>
     </form>
   </main>
   <% include partials/footer %>

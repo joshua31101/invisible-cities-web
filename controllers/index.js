@@ -22,7 +22,7 @@ router.get('/statue/search', function(req, res) {
   const query = req.query.q;
   const searchCategory = req.query.searchCategory;
   const isAdminUser = req.session.isAdminUser;
-  
+
   firebase.searchStatues(query, searchCategory, function(statues) {
     firebase.getMaps(function(maps) {
       res.render('statueList', {
@@ -53,11 +53,14 @@ router.get('/admin', function(req, res) {
   if (!req.session.isAdminUser) {
     return res.status(500).send('Unauthorized access');
   }
-  res.render('addAdmin', {
-    userFound: false,
-    email: '',
-    error: '',
-    success: '',
+  firebase.getAdmins(function(admins) {
+    res.render('addAdmin', {
+      userFound: false,
+      email: '',
+      error: '',
+      success: '',
+      admins: admins,
+    });
   });
 });
 
@@ -84,7 +87,7 @@ router.post('/add-admin', function(req, res) {
         success: '',
       });
     }
-    
+
     if (userFound) {
       firebase.addAdminUser(email, function(error) {
         if (error) {
@@ -173,7 +176,7 @@ router.post('/login', function(req, res) {
         res.redirect('/login');
     	} else {
         req.session.email = email;
-        req.session.isAdminUser = isAdminUser;      
+        req.session.isAdminUser = isAdminUser;
     		res.redirect('/');
       }
     }

@@ -13,6 +13,7 @@ module.exports = {
   getMap: getMap,
   hasUser: hasUser,
   addAdminUser: addAdminUser,
+  getAdmins: getAdmins,
 }
 
 const firebase = require('firebase');
@@ -119,6 +120,16 @@ function addAdminUser(email, callback) {
   });
 }
 
+function getAdmins(callback) {
+  return firebase.database().ref('/adminUsers').once('value').then(function(snapshot) {
+    callback(snapshot.val());
+  });
+}
+
 function _encodeEmail(email) {
   return email.replace('.', ',');
+}
+
+function _decodeEmail(email) {
+  return email.replace(',', '.');
 }
