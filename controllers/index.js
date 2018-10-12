@@ -54,7 +54,7 @@ router.get('/admin', function(req, res) {
     return res.status(500).send('Unauthorized access');
   }
   firebase.getAdmins(function(admins) {
-    res.render('addAdmin', {
+    res.render('admin', {
       userFound: false,
       email: '',
       error: '',
@@ -70,7 +70,7 @@ router.post('/add-admin', function(req, res) {
   }
   const email = req.body.email;
   if (!email || (email && !email.includes('@'))) {
-    return res.render('addAdmin', {
+    return res.render('admin', {
       userFound: false,
       email: '',
       error: 'Please enter an email',
@@ -80,7 +80,7 @@ router.post('/add-admin', function(req, res) {
 
   firebase.hasUser(email, function(userFound, error) {
     if (error) {
-      return res.render('addAdmin', {
+      return res.render('admin', {
         userFound: false,
         email: '',
         error: error.message,
@@ -91,14 +91,14 @@ router.post('/add-admin', function(req, res) {
     if (userFound) {
       firebase.addAdminUser(email, function(error) {
         if (error) {
-          return res.render('addAdmin', {
+          return res.render('admin', {
             userFound,
             email,
             error: error.message,
             success: '',
           });
         }
-        return res.render('addAdmin', {
+        return res.render('admin', {
           userFound,
           email,
           error: '',
@@ -106,7 +106,7 @@ router.post('/add-admin', function(req, res) {
         });
       });
     }
-    res.render('addAdmin', {
+    res.render('admin', {
       userFound,
       email,
       error: 'User is not found',

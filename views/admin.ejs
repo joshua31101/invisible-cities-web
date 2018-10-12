@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <% include partials/head %>
+  <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
   <%- include('partials/header') %>
@@ -30,15 +31,20 @@
       </div>
       <div class="container">
         <% adminKeys = Object.keys(admins) %>
-        <div class="statue-info-container">
-            <h3>Admins</h4>
+        <div class="heading">
+          <h3>Admins</h4>
         </div>
         <% for (var i = adminKeys.length - 1; i >= 0; i--) { %>
-            <% const admin = adminKeys[i].replace(',','.'); %>
-            <div class="statue-info-container">
-              <p class="statue-info"><span><%= admin %></span></p>
+          <% const admin = adminKeys[i].replace(',','.'); %>
+          <div class="row">
+            <div class="admin-list-container">
+              <span class="admin-info"><%= admin %></span>
+              <button type="button" class="close" aria-label="Close">
+                <span class="text-danger" aria-hidden="true">&times;</span>
+              </button>
             </div>
-          <% } %>
+          </div>
+        <% } %>
       </div>
     </form>
   </main>
