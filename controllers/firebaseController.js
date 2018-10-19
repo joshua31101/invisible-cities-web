@@ -39,10 +39,15 @@ function getUser() {
   return firebase.auth().currentUser;
 }
 
-function getStatues(callback) {
-  return firebase.database().ref('/statues').once('value').then(function(snapshot) {
-    callback(snapshot.val());
-  });
+function getStatues(lastStatueKey, callback) {
+  let rf = firebase.database().ref('/statues').orderByKey();
+  if (lastStatueKey) {
+    rf = rf.startAt(lastStatueKey)
+  }
+
+  return rf.limitToFirst(17).once('value').then((snapshot) => {
+      callback(snapshot.val());
+    });
 }
 
 function searchStatues(query, searchCategory, callback) {
