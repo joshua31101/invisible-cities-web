@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <% include partials/head %>
-  <link rel="stylesheet" href="/css/statue-list.css">
+  <link rel="stylesheet" href="/css/statueList.css">
 </head>
 <body>
   <%- include('partials/header') %>
@@ -46,34 +46,13 @@
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container main-container">
       <div class="row multiple-cards-container">
-        <% if (statues) { %>
-          <% statueKeys = Object.keys(statues) %>
-          <% for (var i = statueKeys.length - 1; i >= 0; i--) { %>
-            <% const sId = statueKeys[i]; %>
-            <% const previewPicURL = statues[sId].statuePreviewPicURL; %>
-            <% const isFlagged = statues[sId].isFlagged; %>
-            <% const isPrivate = statues[sId].isPrivate; %>
-            <% const likesCount = statues[sId].like; %>
-            <% const dislikesCount = statues[sId].dislike; %>
-            <div class="card-container col-md-6 col-lg-4"
-              data-groups='["<%= isFlagged ? "flagged" : "unflagged" %>", "<%= isPrivate ? "private" : "public" %>"]'
-              data-likes-count="<%= likesCount %>"
-              data-dislikes-count="<%= dislikesCount %>">
-              <%- include('partials/statueCard', {
-                sId: sId,
-                statue: statues[sId],
-                statueId: sId,
-                map: maps[sId],
-                previewPicURL: previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : '',
-                isAdminUser: isAdminUser
-              }) %>
-            </div>
-          <% } %>
-        <% } else { %>
-          <h3>No statues found..</h3>
-        <% } %>
+        <%- include('partials/statueCardContainer', {
+          statues: statues,
+          isAdminUser: isAdminUser,
+          maps: maps
+        }) %>
       </div>
     </div>
     <div class="col-md-6 col-lg-4 sizer"></div>
@@ -81,9 +60,9 @@
   <% include partials/footer %>
 </body>
 <script type="text/javascript">
-  $(document).ready(function() {
+  $(document).ready(() => {
 
-    $('.statue-remove-form').submit(function(ev) {
+    $('.main-container').on('submit', '.statue-remove-form', (ev) => {
       ev.preventDefault();
       let errMsg = 'Are you sure that you want to delete statue: \n\n' + ev.target.dataset['statueName'] + '?';
       if (confirm(errMsg)) {
@@ -93,13 +72,15 @@
 
     const Shuffle = window.Shuffle;
     const element = $('.multiple-cards-container');
-    const shuffleInstance = new Shuffle(element, {
+    let shuffleInstance = new Shuffle(element, {
       itemSelector: '.card-container',
       sizer: '.sizer',
       filterMode: Shuffle.FilterMode.All,
     });
 
-    $('#filterSort').click(function(e) {
+    $('#filterSort').click((e) => {
+      $('#noStatue').remove();
+      $(window).off('scroll');
       const $clickedButton = $(e.target);
       const filterBy = $clickedButton.data('filter');
       const sortBy = $clickedButton.data('sort');
@@ -145,14 +126,51 @@
           };
         }
         shuffleInstance.sort({
-          compare: function (a, b) {
+          compare:  (a, b) => {
             const sortA = parseInt(a.element.getAttribute(`data-${sortBy}-count`));
             const sortB = parseInt(b.element.getAttribute(`data-${sortBy}-count`));
             return sortB - sortA;
           },
         });
       }
+
+      // bind the scroll event again if the filter/sort options are all unchecked.
+      if ($('.active').length === 0) {
+        $(window).bind('scroll', bindScroll);
+      }
     });
+
+    const $mainContainer = $('.main-container');
+    const $cardContainer = $('.multiple-cards-container');
+    function bindScroll() {
+      if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+        if ($('#spinnerContainer').length === 0 && $('#noStatue').length === 0)  {
+          $mainContainer.append('<div id="spinnerContainer"><div id="spinner"></div></div>');
+          setTimeout(() => {
+            $.ajax({
+              url: '/?isScroll=1',
+              success: (data) => {
+                $mainContainer.find('#spinnerContainer').remove();
+                const noStatueFound = $(data).is('h3');
+                if (noStatueFound) {
+                  $('main').append(data);
+                } else {
+                  $cardContainer.append(data);
+                  shuffleInstance = new Shuffle(element, {
+                    itemSelector: '.card-container',
+                    sizer: '.sizer',
+                    filterMode: Shuffle.FilterMode.All,
+                  });
+                }
+              },
+            });
+          }, 1000);
+        }
+      }
+    };
+    $(window).bind('scroll', bindScroll);
+    bindScroll();
+    
   });
 </script>
 </html>
