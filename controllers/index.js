@@ -84,6 +84,7 @@ router.get('/admin', function(req, res) {
     return res.status(500).send('Unauthorized access');
   }
   firebase.getAdmins(function(admins) {
+    req.session.admins = admins;
     res.render('admin', {
       userFound: false,
       email: '',
@@ -94,7 +95,7 @@ router.get('/admin', function(req, res) {
   });
 });
 
-router.post('/add-admin', function(req, res) {
+router.post('/admin/add', function(req, res) {
   if (!req.session.isAdminUser) {
     return res.status(500).send('Unauthorized access');
   }
@@ -105,6 +106,7 @@ router.post('/add-admin', function(req, res) {
       email: '',
       error: 'Please enter an email',
       success: '',
+      admins: req.session.admins,
     });
   }
 
@@ -115,6 +117,7 @@ router.post('/add-admin', function(req, res) {
         email: '',
         error: error.message,
         success: '',
+        admins: req.session.admins,
       });
     }
 
@@ -126,22 +129,27 @@ router.post('/add-admin', function(req, res) {
             email,
             error: error.message,
             success: '',
+            admins: req.session.admins,
           });
         }
+        req.session.admins[email] = '1';
         return res.render('admin', {
           userFound,
           email,
           error: '',
           success: 'Successfully added!',
+          admins: req.session.admins,
         });
       });
+    } else {
+      res.render('admin', {
+        userFound,
+        email,
+        error: 'User is not found',
+        success: '',
+        admins: req.session.admins,
+      });
     }
-    res.render('admin', {
-      userFound,
-      email,
-      error: 'User is not found',
-      success: '',
-    });
   });
 });
 

@@ -120,6 +120,7 @@ function hasUser(email, callback) {
 
 function addAdminUser(email, callback) {
   firebase.database().ref(`/adminUsers/${_encodeEmail(email)}`).set('1').then(() => {
+    callback(null);
   }).catch(error => {
     callback(error);
   });
