@@ -194,6 +194,27 @@ router.post('/statue-private', function(req, res) {
   return res.redirect('/');
 });
 
+router.get('/statue-card', function(req, res) {
+  const {
+    statueId,
+    statue,
+    previewPicURL,
+    isAdminUser,
+  } = req.query;
+
+  if (!statueId || !statue || !previewPicURL) {
+    return res.status(500).send('Invalid access!');
+  }
+
+  res.render('partials/statueCard', {
+    statueId,
+    statue,
+    previewPicURL,
+    isAdminUser,
+    map: null,
+  });
+});
+
 router.get('/login', function(req, res) {
   const err = req.session.error;
   delete req.session.error;

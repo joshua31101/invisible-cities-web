@@ -12,9 +12,8 @@
       data-likes-count="<%= likesCount %>"
       data-dislikes-count="<%= dislikesCount %>">
       <%- include('statueCard', {
-        sId: sId,
-        statue: statues[sId],
         statueId: sId,
+        statue: statues[sId],
         map: maps[sId],
         previewPicURL: previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : '',
         isAdminUser: isAdminUser
