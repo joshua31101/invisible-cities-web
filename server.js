@@ -29,11 +29,12 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(function(req, res, next) {
   const currentUrl = url.parse(req.url).pathname;
+  const isAdminUser = req.session.isAdminUser;
   res.locals.hasLoggedIn = 0;
   if (firebase.hasLoggedIn()) {
-    res.locals.isAdminUser = req.session.isAdminUser;
+    res.locals.isAdminUser = isAdminUser;
     res.locals.hasLoggedIn = 1;
-    if (currentUrl === '/login') {
+    if (currentUrl === '/login' || (currentUrl.includes('/admin') && !isAdminUser)) {
       return res.redirect('/');
     }
   } else if (currentUrl !== '/login') {

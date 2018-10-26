@@ -1,9 +1,6 @@
 const firebase = require('./firebaseController');
 
 exports.index = function(req, res) {
-  if (!req.session.isAdminUser) {
-    return res.status(500).send('Unauthorized access');
-  }
   const error = req.session.error;
   const success = req.session.success;
   delete req.session.error;
@@ -21,9 +18,6 @@ exports.index = function(req, res) {
 };
 
 exports.adminAddPost = function(req, res) {
-  if (!req.session.isAdminUser) {
-    return res.status(500).send('Unauthorized access');
-  }
   const email = req.body.email;
   if (!email || (email && !email.includes('@'))) {
     req.session.error = 'Please enter a valid email.';
@@ -53,9 +47,6 @@ exports.adminAddPost = function(req, res) {
 };
 
 exports.adminRemovePost = function(req, res) {
-  if (!req.session.isAdminUser) {
-    return res.status(500).send('Unauthorized access');
-  }
   const email = req.body.email;
   firebase.removeAdmin(email, function(error) {
     if (error) {
