@@ -30,8 +30,8 @@ app.use(express.static(__dirname + '/public'));
 app.use(function(req, res, next) {
   const currentUrl = url.parse(req.url).pathname;
   res.locals.hasLoggedIn = 0;
-  res.locals.isAdminUser = req.session.isAdminUser;
   if (firebase.hasLoggedIn()) {
+    res.locals.isAdminUser = req.session.isAdminUser;
     res.locals.hasLoggedIn = 1;
     if (currentUrl === '/login') {
       return res.redirect('/');

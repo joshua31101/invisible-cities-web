@@ -17,7 +17,7 @@ exports.loginPost = function(req, res) {
       req.session.error = 'Incorrect username or password.';
       res.redirect('/login');
     } else {
-      req.session.email = email;        
+      req.session.email = email;
       req.session.isAdminUser = isAdminUser;
       res.redirect('/');
     }
