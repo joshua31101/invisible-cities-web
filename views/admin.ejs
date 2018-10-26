@@ -31,16 +31,16 @@
       </div>
     </form>
     <div class="container">
-      <% adminKeys = Object.keys(admins) %>
+      <% adminEmailList = Object.keys(admins) %>
       <div class="heading">
         <h3>Admins</h4>
       </div>
-      <% for (var i = adminKeys.length - 1; i >= 0; i--) { %>
-        <% const admin = adminKeys[i].replace(',','.'); %>
+      <% for (var i = adminEmailList.length - 1; i >= 0; i--) { %>
+        <% email = adminEmailList[i].replace(',', '.') %>
         <form class="row" action="/admin/remove" method="POST">
-          <input name="email" type="hidden" value="<%= admin %>" />
+          <input name="email" type="hidden" value="<%= email %>" />
           <div class="admin-list-container">
-            <span class="admin-info"><%= admin %></span>
+            <span class="admin-info"><%= email %></span>
             <button type="submit" class="close" aria-label="Close">
               <span class="text-danger" aria-hidden="true">&times;</span>
             </button>

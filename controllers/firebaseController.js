@@ -127,8 +127,12 @@ function addAdminUser(email, callback) {
   });
 }
 
-function removeAdmin(email) {
-  return firebase.database().ref(`/adminUsers/${_decodeEmail(email)}`).remove();
+function removeAdmin(email, callback) {
+  return firebase.database().ref(`/adminUsers/${_encodeEmail(email)}`).remove().then(() => {
+    callback(null);
+  }).catch(error => {
+    callback(error);
+  });
 }
 
 function getAdmins(callback) {
@@ -139,8 +143,4 @@ function getAdmins(callback) {
 
 function _encodeEmail(email) {
   return email.replace('.', ',');
-}
-
-function _decodeEmail(email) {
-  return email.replace(',', '.');
 }

@@ -83,13 +83,18 @@ router.get('/admin', function(req, res) {
   if (!req.session.isAdminUser) {
     return res.status(500).send('Unauthorized access');
   }
+  const error = req.session.error;
+  const success = req.session.success;
+  delete req.session.error;
+  delete req.session.success;
+
   firebase.getAdmins(function(admins) {
     req.session.admins = admins;
     res.render('admin', {
       userFound: false,
       email: '',
-      error: '',
-      success: '',
+      error: error,
+      success: success,
       admins: admins,
     });
   });
@@ -153,14 +158,19 @@ router.post('/admin/add', function(req, res) {
   });
 });
 
-
 router.post('/admin/remove', function(req, res) {
   if (!req.session.isAdminUser) {
     return res.status(500).send('Unauthorized access');
   }
   const email = req.body.email;
-  firebase.removeAdmin(email);
-  res.redirect('/admin');
+  firebase.removeAdmin(email, function(error) {
+    if (error) {
+      req.session.error = 'Something went wrong! Here is detail: ' + error;
+    } else {
+      req.session.success = `Successfully removed ${email}!`;
+    }
+    res.redirect('/admin');
+  });
 });
 
 router.get('/statue/:id', function(req, res) {
