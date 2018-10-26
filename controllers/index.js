@@ -89,7 +89,6 @@ router.get('/admin', function(req, res) {
   delete req.session.success;
 
   firebase.getAdmins(function(admins) {
-    req.session.admins = admins;
     res.render('admin', {
       userFound: false,
       email: '',
@@ -106,54 +105,28 @@ router.post('/admin/add', function(req, res) {
   }
   const email = req.body.email;
   if (!email || (email && !email.includes('@'))) {
-    return res.render('admin', {
-      userFound: false,
-      email: '',
-      error: 'Please enter an email',
-      success: '',
-      admins: req.session.admins,
-    });
+    req.session.error = 'Please enter a valid email.';
+    return res.redirect('/admin');
   }
 
   firebase.hasUser(email, function(userFound, error) {
     if (error) {
-      return res.render('admin', {
-        userFound: false,
-        email: '',
-        error: error.message,
-        success: '',
-        admins: req.session.admins,
-      });
+      req.session.error = error.message;
+      return res.redirect('/admin');
     }
 
     if (userFound) {
       firebase.addAdminUser(email, function(error) {
         if (error) {
-          return res.render('admin', {
-            userFound,
-            email,
-            error: error.message,
-            success: '',
-            admins: req.session.admins,
-          });
+          req.session.error = error.message;
+          return res.redirect('/admin');
         }
-        req.session.admins[email] = '1';
-        return res.render('admin', {
-          userFound,
-          email,
-          error: '',
-          success: 'Successfully added!',
-          admins: req.session.admins,
-        });
+        req.session.success = `Successfully added ${email}!`;
+        return res.redirect('/admin');
       });
     } else {
-      res.render('admin', {
-        userFound,
-        email,
-        error: 'User is not found',
-        success: '',
-        admins: req.session.admins,
-      });
+      req.session.error = `User with ${email} is not found.`;
+      return res.redirect('/admin');
     }
   });
 });
