@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" <%= statueId ? `id=statue${statueId}` : '' %>>
   <div class="image-container">
     <img class="card-img-top" src="<%= previewPicURL %>" alt="<%= statue.name %>">
   </div>
@@ -30,9 +30,11 @@
           </form>
         </div>
       <% } %>
-      <div id="location-<%= sId %>" class="statue-info">
-        Location: <span></span>
-      </div>
+      <% if (map) { %>
+        <div id="location-<%= statueId %>" class="statue-info">
+          Location: <span></span>
+        </div>
+      <% } %>
     </div>
     <% if (isAdminUser) { %>
       <div class="button-container">
@@ -45,18 +47,20 @@
   </div>
 </div>
 
-<script>
-  $.ajax({
-    url: 'https://nominatim.openstreetmap.org/reverse?format=json&lat=<%= map.latitude %>&lon=<%= map.longitude %>&zoom=10',
-    data: 'GET',
-    success: (data) => {
-      const city = data.address.city;
-      const state = data.address.state;
-      if (city != undefined) {
-        $('#location-<%= sId %>').find('span').html(city + ', ' + state);
-      } else {
-        $('#location-<%= sId %>').find('span').html(state);
+<% if (map) { %>
+  <script>
+    $.ajax({
+      url: 'https://nominatim.openstreetmap.org/reverse?format=json&lat=<%= map.latitude %>&lon=<%= map.longitude %>&zoom=10',
+      data: 'GET',
+      success: (data) => {
+        const city = data.address.city;
+        const state = data.address.state;
+        if (city != undefined) {
+          $('#location-<%= statueId %>').find('span').html(city + ', ' + state);
+        } else {
+          $('#location-<%= statueId %>').find('span').html(state);
+        }
       }
-    }
-  });
-</script>
+    });
+  </script>
+<% } %>
