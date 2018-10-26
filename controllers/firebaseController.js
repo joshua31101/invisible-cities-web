@@ -14,6 +14,7 @@ module.exports = {
   hasUser: hasUser,
   addAdminUser: addAdminUser,
   getAdmins: getAdmins,
+  removeAdmin: removeAdmin
 }
 
 const firebase = require('firebase');
@@ -124,6 +125,10 @@ function addAdminUser(email, callback) {
   }).catch(error => {
     callback(error);
   });
+}
+
+function removeAdmin(email) {
+  return firebase.database().ref(`/adminUsers/${_decodeEmail(email)}`).remove();
 }
 
 function getAdmins(callback) {

@@ -29,24 +29,25 @@
           <input type="submit" value="Search" class="btn btn-outline-secondary" />
         </div>
       </div>
-      <div class="container">
-        <% adminKeys = Object.keys(admins) %>
-        <div class="heading">
-          <h3>Admins</h4>
-        </div>
-        <% for (var i = adminKeys.length - 1; i >= 0; i--) { %>
-          <% const admin = adminKeys[i].replace(',','.'); %>
-          <div class="row">
-            <div class="admin-list-container">
-              <span class="admin-info"><%= admin %></span>
-              <button type="button" class="close" aria-label="Close">
-                <span class="text-danger" aria-hidden="true">&times;</span>
-              </button>
-            </div>
-          </div>
-        <% } %>
-      </div>
     </form>
+    <div class="container">
+      <% adminKeys = Object.keys(admins) %>
+      <div class="heading">
+        <h3>Admins</h4>
+      </div>
+      <% for (var i = adminKeys.length - 1; i >= 0; i--) { %>
+        <% const admin = adminKeys[i].replace(',','.'); %>
+        <form class="row" action="/admin/remove" method="POST">
+          <input name="email" type="hidden" value="<%= admin %>" />
+          <div class="admin-list-container">
+            <span class="admin-info"><%= admin %></span>
+            <button type="submit" class="close" aria-label="Close">
+              <span class="text-danger" aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </form>
+      <% } %>
+    </div>
   </main>
   <% include partials/footer %>
 </body>

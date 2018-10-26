@@ -17,8 +17,8 @@ router.get('/', function(req, res) {
     });
   }
 
-  firebase.getStatues(lastStatueKey, function(statues) {   
-    const statueKeyList = Object.keys(statues);   
+  firebase.getStatues(lastStatueKey, function(statues) {
+    const statueKeyList = Object.keys(statues);
     const _lastStatueKey = statueKeyList[statueKeyList.length - 1];
     // update last statue key for next pagination reference
     req.session.lastStatueKey = _lastStatueKey;
@@ -151,6 +151,16 @@ router.post('/admin/add', function(req, res) {
       });
     }
   });
+});
+
+
+router.post('/admin/remove', function(req, res) {
+  if (!req.session.isAdminUser) {
+    return res.status(500).send('Unauthorized access');
+  }
+  const email = req.body.email;
+  firebase.removeAdmin(email);
+  res.redirect('/admin');
 });
 
 router.get('/statue/:id', function(req, res) {
