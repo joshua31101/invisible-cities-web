@@ -11,7 +11,7 @@
       <% if (isAdminUser) { %>
         <div class="option-container">
           <span class="statue-info">Flagged: <span class="text-flag"><%= statue.isFlagged %></span></span>
-          <form action="/statue-flag" method="post">
+          <form action="/statues/flag" method="post">
             <input type="hidden" name="statueId" value="<%= statueId %>">
             <input type="hidden" name="isFlagged" value="<%= statue.isFlagged %>">
             <button type="submit" class="flag-btn btn alert-danger" data-statue-name="<%= statue.name %>">
@@ -21,7 +21,7 @@
         </div>
         <div class="option-container">
           <span class="statue-info"><span class="text-private"><%= statue.isPrivate ? 'Private' : 'Public' %></span></span>
-          <form action="/statue-private" method="post">
+          <form action="/statues/private" method="post">
             <input type="hidden" name="statueId" value="<%= statueId %>">
             <input type="hidden" name="isPrivate" value="<%= statue.isPrivate %>">
             <button type="submit" class="private-btn btn alert-danger" data-statue-name="<%= statue.name %>">
@@ -38,7 +38,7 @@
     </div>
     <% if (isAdminUser) { %>
       <div class="button-container">
-        <form action="/statue" method="post" class="statue-remove-form" data-statue-name="<%= statue.name %>">
+        <form action="/statues/remove" method="post" class="statue-remove-form" data-statue-name="<%= statue.name %>">
           <input type="hidden" name="statueId" value="<%= statueId %>">
           <button id="removeBtn" type="submit" class="btn alert-danger remove-btn">Remove</button>
         </form>

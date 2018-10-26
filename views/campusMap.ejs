@@ -30,7 +30,7 @@
       const statueId = $this.find('input[name=statueId]').val();
       const isFlagged = $this.find('input[name=isFlagged]').val();
       $.ajax({
-        url: '/statue-flag',
+        url: '/statues/flag',
         method: 'POST',
         data: {
           isFlagged: isFlagged,
@@ -55,7 +55,7 @@
       const statueId = $this.find('input[name=statueId]').val();
       const isPrivate = $this.find('input[name=isPrivate]').val();
       $.ajax({
-        url: '/statue-private',
+        url: '/statues/private',
         method: 'POST',
         data: {
           isPrivate: isPrivate,
@@ -82,7 +82,7 @@
         const $this = $(ev.target);
         const statueId = $this.find('input[name=statueId]').val();
         $.ajax({
-          url: '/statue',
+          url: '/statues/remove',
           method: 'POST',
           data: {
             statueId: statueId,
@@ -125,13 +125,14 @@
       marker.addListener('click', (function(marker, i) {
         marker = this;
         $.ajax({
-          url: '/statue/' + marker.id,
+          url: '/statues/statue/' + marker.id,
           success: function(data) {
             const statue = data.statue;
             const previewPicURL = statue.statuePreviewPicURL;
             const imageURL = previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : '';
+            debugger;
             $.ajax({
-              url: '/statue-card',
+              url: '/statues/card',
               data: {
                 statueId: marker.id,
                 previewPicURL: imageURL,
@@ -139,6 +140,7 @@
                 isAdminUser: <%= isAdminUser %>,
               },
               success: function(statueCardContent) {
+                debugger;
                 const infowindow = new google.maps.InfoWindow({
                   content: statueCardContent
                 });

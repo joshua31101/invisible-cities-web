@@ -1,23 +1,5 @@
-module.exports = {
-  hasLoggedIn: hasLoggedIn,
-	login: login,
-  logout: logout,
-  getUser: getUser,
-  getStatues: getStatues,
-  searchStatues: searchStatues,
-  getStatue: getStatue,
-  removeStatue: removeStatue,
-  toggleStatueFlag: toggleStatueFlag,
-  toggleStatuePrivate: toggleStatuePrivate,
-  getMaps: getMaps,
-  getMap: getMap,
-  hasUser: hasUser,
-  addAdminUser: addAdminUser,
-  getAdmins: getAdmins,
-  removeAdmin: removeAdmin
-}
-
 const firebase = require('firebase');
+const _this = this;
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
@@ -32,15 +14,15 @@ const app = firebase.initializeApp({
   messagingSenderId: process.env.FIREBASE_MSG_SENDER_ID
 });
 
-function hasLoggedIn() {
-  return getUser() !== null;
-}
+exports.hasLoggedIn = function() {
+  return _this.getUser() !== null;
+};
 
-function getUser() {
+exports.getUser = function() {
   return firebase.auth().currentUser;
-}
+};
 
-function getStatues(lastStatueKey, callback) {
+exports.getStatues = function(lastStatueKey, callback) {
   let rf = firebase.database().ref('/statues').orderByKey();
   if (lastStatueKey) {
     rf = rf.startAt(lastStatueKey)
@@ -49,49 +31,49 @@ function getStatues(lastStatueKey, callback) {
   return rf.limitToFirst(17).once('value').then((snapshot) => {
       callback(snapshot.val());
     });
-}
+};
 
-function searchStatues(query, searchCategory, callback) {
+exports.searchStatues = function(query, searchCategory, callback) {
   return firebase.database().ref('/statues').orderByChild(searchCategory).startAt(query).once("value").then(function(snapshot) {
     callback(snapshot.val());
   });
-}
+};
 
-function getStatue(sId, callback) {
+exports.getStatue = function(sId, callback) {
   return firebase.database().ref('/statues/' + sId).once('value').then(function(snapshot) {
     callback(snapshot.val());
   });
-}
+};
 
-function getMaps(callback) {
+exports.getMaps = function(callback) {
   return firebase.database().ref('/maps').once('value').then(function(snapshot) {
     callback(snapshot.val());
   });
-}
+};
 
-function getMap(sId, callback) {
+exports.getMap = function(sId, callback) {
   return firebase.database().ref('/maps/' + sId).once('value').then(function(snapshot) {
     callback(snapshot.val());
   });
-}
+};
 
-function removeStatue(sId) {
+exports.removeStatue = function(sId) {
   firebase.database().ref('/maps/' + sId).remove();
   firebase.database().ref('/ratings/' + sId).remove();
   return firebase.database().ref('/statues/' + sId).remove();
-}
+};
 
-function toggleStatueFlag(sId, isFlagged) {
+exports.toggleStatueFlag = function(sId, isFlagged) {
   return firebase.database().ref(`/statues/${sId}`).update({ isFlagged: !isFlagged });
-}
+};
 
-function toggleStatuePrivate(sId, isPrivate) {
+exports.toggleStatuePrivate = function(sId, isPrivate) {
   return firebase.database().ref(`/statues/${sId}`).update({ isPrivate: !isPrivate });
-}
+};
 
-function login(email, password, callback) {
+exports.login = function(email, password, callback) {
 	firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
-    const email = getUser().email;
+    const email = _this.getUser().email;
     firebase.database().ref(`/adminUsers/${_encodeEmail(email)}`).once('value').then(function(snapshot) {
       const isAdminUser = snapshot.val() ? true : false;
       callback(null, isAdminUser);
@@ -99,48 +81,48 @@ function login(email, password, callback) {
   }).catch(function(error) {
     callback(error, false);
   })
-}
+};
 
-function logout(callback) {
+exports.logout = function(callback) {
   firebase.auth().signOut().then(function() {
     // Sign-out successful.
     callback(null);
   }, function(error) {
     callback(error);
   });
-}
+};
 
-function hasUser(email, callback) {
+exports.hasUser = function(email, callback) {
   firebase.auth().fetchProvidersForEmail(email).then(providers => {
     const userFound = providers.length > 0;
     callback(userFound, false);
   }).catch(error => {
     callback(false, error);
   });
-}
+};
 
-function addAdminUser(email, callback) {
+exports.addAdminUser = function(email, callback) {
   firebase.database().ref(`/adminUsers/${_encodeEmail(email)}`).set('1').then(() => {
     callback(null);
   }).catch(error => {
     callback(error);
   });
-}
+};
 
-function removeAdmin(email, callback) {
+exports.removeAdmin = function(email, callback) {
   return firebase.database().ref(`/adminUsers/${_encodeEmail(email)}`).remove().then(() => {
     callback(null);
   }).catch(error => {
     callback(error);
   });
-}
+};
 
-function getAdmins(callback) {
+exports.getAdmins = function(callback) {
   return firebase.database().ref('/adminUsers').once('value').then(function(snapshot) {
     callback(snapshot.val());
   });
-}
+};
 
 function _encodeEmail(email) {
   return email.replace('.', ',');
-}
+};

@@ -22,7 +22,9 @@
         <ul>
           <li><a class="btn" href="/">Statues</a></li>
           <li><a class="btn" href="/campus-map">Campus Map</a></li>
-          <li><a class="btn" href="/admin">Admin Portal</a></li>
+          <% if (isAdminUser) { %>
+            <li><a class="btn" href="/admin">Admin Portal</a></li>
+          <% } %>
         </ul>
       </div>
     </section>
