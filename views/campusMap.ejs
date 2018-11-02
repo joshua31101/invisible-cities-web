@@ -34,12 +34,10 @@
         method: 'POST',
         data: {
           isFlagged: isFlagged,
-          statueId: statueId,
-          isJson: 1
+          statueId: statueId
         },
         success: function(data) {
-          const statueId = data.statueId;
-          const $statueCard = $('#statue' + statueId);
+          const $statueCard = $('#statue' + data.statueId);
           $statueCard.find('.text-flag')[0].innerText = data.isFlagged;
           $statueCard.find('.flag-btn')[0].innerText = data.isFlagged ? 'Unflag' : 'Flag';
           $statueCard.find('input[name=isFlagged]').val(data.isFlagged);
@@ -59,18 +57,15 @@
         method: 'POST',
         data: {
           isPrivate: isPrivate,
-          statueId: statueId,
-          isJson: 1
+          statueId: statueId
         },
         success: function(data) {
-          const statueId = data.statueId;
-          const $statueCard = $('#statue' + statueId);
+          const $statueCard = $('#statue' + data.statueId);
           $statueCard.find('.text-private')[0].innerText = data.isPrivate ? 'Private' : 'Public';
           $statueCard.find('.private-btn')[0].innerText = data.isPrivate ? 'Set public' : 'Set private';
           $statueCard.find('input[name=isPrivate]').val(data.isPrivate);
         },
         error: function(xhr) {
-
         }
       });
     });
@@ -85,8 +80,7 @@
           url: '/statues/remove',
           method: 'POST',
           data: {
-            statueId: statueId,
-            isJson: 1
+            statueId: statueId
           },
           success: function(data) {
             location.reload();
@@ -125,31 +119,14 @@
       marker.addListener('click', (function(marker, i) {
         marker = this;
         $.ajax({
-          url: '/statues/statue/' + marker.id,
+          url: '/statues/card/' + marker.id,
           success: function(data) {
-            const statue = data.statue;
-            const previewPicURL = statue.statuePreviewPicURL;
-            const imageURL = previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : '';
-            debugger;
-            $.ajax({
-              url: '/statues/card',
-              data: {
-                statueId: marker.id,
-                previewPicURL: imageURL,
-                statue,
-                isAdminUser: <%= isAdminUser %>,
-              },
-              success: function(statueCardContent) {
-                debugger;
-                const infowindow = new google.maps.InfoWindow({
-                  content: statueCardContent
-                });
-                infowindow.open(map, marker);
-              }
-            })
+            const infowindow = new google.maps.InfoWindow({
+              content: data
+            });
+            infowindow.open(map, marker);
           },
           error: function(xhr) {
-
           }
         });
       }));

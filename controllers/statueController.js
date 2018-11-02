@@ -18,14 +18,16 @@ exports.search = function(req, res) {
   });
 };
 
-exports.statueGet = function(req, res) {
+exports.statueCardGet = function(req, res) {
   const sId = req.params.id;
+  const isAdminUser = req.session.isAdminUser;
+
   firebase.getStatue(sId, function(statue) {
-    firebase.getMap(sId, function(map) {
-      res.status(200).send({
-        map: map,
-        statue: statue
-      });
+    res.render('partials/statueCard', {
+      statueId: sId,
+      statue,
+      isAdminUser,
+      map: null,
     });
   });
 };
@@ -33,7 +35,7 @@ exports.statueGet = function(req, res) {
 exports.statueRemove = function(req, res) {
   const statueId = req.body.statueId;
   firebase.removeStatue(statueId);
-  if (req.body.isJson) {
+  if (req.xhr) {
     return res.status(200).send({ statueId: statueId });
   }
   return res.redirect('/');
@@ -43,7 +45,7 @@ exports.statueFlagPost = function(req, res) {
   const isFlagged = JSON.parse(req.body.isFlagged);
   const statueId = req.body.statueId;
   firebase.toggleStatueFlag(statueId, isFlagged);
-  if (req.body.isJson) {
+  if (req.xhr) {
     return res.status(200).send({ isFlagged: !isFlagged, statueId: statueId });
   }
   return res.redirect('/');
@@ -53,28 +55,8 @@ exports.statuePrivatePost = function(req, res) {
   const isPrivate = JSON.parse(req.body.isPrivate);
   const statueId = req.body.statueId;
   firebase.toggleStatuePrivate(statueId, isPrivate);
-  if (req.body.isJson) {
+  if (req.xhr) {
     return res.status(200).send({ isPrivate: !isPrivate, statueId: statueId });
   }
   return res.redirect('/');
-};
-
-exports.statueCardGet = function(req, res) {
-  const {
-    statueId,
-    statue,
-    previewPicURL,
-    isAdminUser,
-  } = req.query;
-
-  if (!statueId || !statue || !previewPicURL) {
-    return res.status(500).send('Invalid access!');
-  }
-  res.render('partials/statueCard', {
-    statueId,
-    statue,
-    previewPicURL,
-    isAdminUser,
-    map: null,
-  });
 };

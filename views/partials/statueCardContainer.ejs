@@ -2,7 +2,6 @@
   <% statueKeys = Object.keys(statues) %>
   <% for (var i = 0; i < statueKeys.length; i++) { %>
     <% const sId = statueKeys[i]; %>
-    <% const previewPicURL = statues[sId].statuePreviewPicURL; %>
     <% const isFlagged = statues[sId].isFlagged; %>
     <% const isPrivate = statues[sId].isPrivate; %>
     <% const likesCount = statues[sId].like; %>
@@ -15,7 +14,6 @@
         statueId: sId,
         statue: statues[sId],
         map: maps[sId],
-        previewPicURL: previewPicURL ? previewPicURL.substr(0, 95) + '%2f' + previewPicURL.substr(96) : '',
         isAdminUser: isAdminUser
       }) %>
     </div>

@@ -10,8 +10,7 @@ const authController = require('./authController');
  * statues
  */
 router.get('/statues/search', statueController.search);
-router.get('/statues/statue/:id', statueController.statueGet);
-router.get('/statues/card', statueController.statueCardGet);
+router.get('/statues/card/:id', statueController.statueCardGet);
 router.post('/statues/remove', statueController.statueRemove);
 router.post('/statues/flag', statueController.statueFlagPost);
 router.post('/statues/private', statueController.statuePrivatePost);

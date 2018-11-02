@@ -1,6 +1,6 @@
 <div class="card" <%= statueId ? `id=statue${statueId}` : '' %>>
   <div class="image-container">
-    <img class="card-img-top" src="<%= previewPicURL %>" alt="<%= statue.name %>">
+    <img class="card-img-top" src="<%= statue.statuePreviewPicURL ? statue.statuePreviewPicURL.substr(0, 95) + '%2f' + statue.statuePreviewPicURL.substr(96) : '' %>" alt="<%= statue.name %>">
   </div>
   <div class="card-body">
     <h5 class="card-title"><%= statue.name %></h5>
@@ -11,7 +11,7 @@
       <% if (isAdminUser) { %>
         <div class="option-container">
           <span class="statue-info">Flagged: <span class="text-flag"><%= statue.isFlagged %></span></span>
-          <form action="/statues/flag" method="post">
+          <form class="statue-flag-form" action="/statues/flag" method="post" data-form-type="flag">
             <input type="hidden" name="statueId" value="<%= statueId %>">
             <input type="hidden" name="isFlagged" value="<%= statue.isFlagged %>">
             <button type="submit" class="flag-btn btn alert-danger" data-statue-name="<%= statue.name %>">
@@ -21,7 +21,7 @@
         </div>
         <div class="option-container">
           <span class="statue-info"><span class="text-private"><%= statue.isPrivate ? 'Private' : 'Public' %></span></span>
-          <form action="/statues/private" method="post">
+          <form class="statue-private-form" action="/statues/private" method="post" data-form-type="visibility">
             <input type="hidden" name="statueId" value="<%= statueId %>">
             <input type="hidden" name="isPrivate" value="<%= statue.isPrivate %>">
             <button type="submit" class="private-btn btn alert-danger" data-statue-name="<%= statue.name %>">
@@ -38,7 +38,7 @@
     </div>
     <% if (isAdminUser) { %>
       <div class="button-container">
-        <form action="/statues/remove" method="post" class="statue-remove-form" data-statue-name="<%= statue.name %>">
+        <form class="statue-remove-form" action="/statues/remove" method="post" class="statue-remove-form" data-form-type="remove"" data-statue-name="<%= statue.name %>">
           <input type="hidden" name="statueId" value="<%= statueId %>">
           <button id="removeBtn" type="submit" class="btn alert-danger remove-btn">Remove</button>
         </form>
