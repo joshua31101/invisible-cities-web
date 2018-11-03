@@ -3,45 +3,69 @@
     <img class="card-img-top" src="<%= statue.statuePreviewPicURL ? statue.statuePreviewPicURL.substr(0, 95) + '%2f' + statue.statuePreviewPicURL.substr(96) : '' %>" alt="<%= statue.name %>">
   </div>
   <div class="card-body">
-    <h5 class="card-title"><%= statue.name %></h5>
-    <p class="card-text"><%= statue.description %></p>
-    <div class="statue-info-container">
-      <p class="statue-info">Like: <span><%= statue.like %></span></p>
-      <p class="statue-info">Dislike: <span><%= statue.dislike %></span></p>
-      <% if (isAdminUser) { %>
-        <div class="option-container">
-          <span class="statue-info">Flagged: <span class="text-flag"><%= statue.isFlagged %></span></span>
-          <form class="statue-flag-form" action="/statues/flag" method="post" data-form-type="flag">
-            <input type="hidden" name="statueId" value="<%= statueId %>">
-            <input type="hidden" name="isFlagged" value="<%= statue.isFlagged %>">
-            <button type="submit" class="flag-btn btn alert-danger" data-statue-name="<%= statue.name %>">
-              <%= statue.isFlagged ? 'Unflag' : 'Flag' %>
-            </button>
-          </form>
-        </div>
-        <div class="option-container">
-          <span class="statue-info"><span class="text-private"><%= statue.isPrivate ? 'Private' : 'Public' %></span></span>
-          <form class="statue-private-form" action="/statues/private" method="post" data-form-type="visibility">
-            <input type="hidden" name="statueId" value="<%= statueId %>">
-            <input type="hidden" name="isPrivate" value="<%= statue.isPrivate %>">
-            <button type="submit" class="private-btn btn alert-danger" data-statue-name="<%= statue.name %>">
-              <%= statue.isPrivate ? 'Set public' : 'Set private' %>
-            </button>
-          </form>
-        </div>
-      <% } %>
-      <% if (map) { %>
-        <div id="location-<%= statueId %>" class="statue-info">
-          Location: <span></span>
-        </div>
-      <% } %>
-    </div>
     <% if (isAdminUser) { %>
-      <div class="button-container">
+      <% if (statue.isPrivate || statue.isFlagged) { %>
+        <div class="tag-container">
+        <% if (statue.isPrivate) { %>
+          <span class="visible-option private">Private</span>
+        <% } %>
+        <% if (statue.isFlagged) { %>
+          <span class="flag-option flag">Flagged</span>
+        <% } %>
+        </div>
+      <% } %>
+      <div class="remove-container">
         <form class="statue-remove-form" action="/statues/remove" method="post" class="statue-remove-form" data-form-type="remove"" data-statue-name="<%= statue.name %>">
           <input type="hidden" name="statueId" value="<%= statueId %>">
-          <button id="removeBtn" type="submit" class="btn alert-danger remove-btn">Remove</button>
+          <button id="removeBtn" type="submit" class="close remove-btn" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </form>
+      </div>
+    <% } %>
+    <h5 class="card-title mb-1"><%= statue.name %></h5>
+    <p class="card-text mb-2"><%= statue.description %></p>
+    <div class="like-container">
+      <img src="/assets/images/thumbsup.svg" alt="Like count"><span><%= statue.like %></span>
+      <img src="/assets/images/thumbsdown.svg" alt="Dislike count"><span><%= statue.dislike %></span>
+    </div>
+    <% if (map) { %>
+      <div id="location<%= statueId %>" class="location"></div>
+    <% } %>
+
+    <% if (isAdminUser) { %>
+      <div class="button-container">
+        <div class="option-container">
+          <form class="statue-form private-form" action="/statues/private" method="post" data-form-type="visibility">
+            <input type="hidden" name="statueId" value="<%= statueId %>">
+            <input type="hidden" name="isPrivate" value="<%= statue.isPrivate %>">
+            <% if (statue.isPrivate) { %>
+              <button type="submit" class="visible-option private btn" data-statue-name="<%= statue.name %>">
+                Set public
+              </button>
+            <% } else { %>
+              <button type="submit" class="visible-option public btn" data-statue-name="<%= statue.name %>">
+                Set private
+              </button>
+            <% } %>
+          </form>
+        </div>
+        <div class="option-container">
+          <form class="statue-form flag-form" action="/statues/flag" method="post" data-form-type="flag">
+            <input type="hidden" name="statueId" value="<%= statueId %>">
+            <input type="hidden" name="isFlagged" value="<%= statue.isFlagged %>">
+            </button>
+            <% if (statue.isFlagged) { %>
+              <button type="submit" class="flag-option flag btn" data-statue-name="<%= statue.name %>">
+                  Unflag
+              </button>
+            <% } else { %>
+              <button type="submit" class="flag-option unflag btn" data-statue-name="<%= statue.name %>">
+                  Flag for review
+              </button>
+            <% } %>
+          </form>
+        </div>
       </div>
     <% } %>
   </div>
@@ -56,9 +80,9 @@
         const city = data.address.city;
         const state = data.address.state;
         if (city != undefined) {
-          $('#location-<%= statueId %>').find('span').html(city + ', ' + state);
+          $('#location<%= statueId %>').html(city + ', ' + state);
         } else {
-          $('#location-<%= statueId %>').find('span').html(state);
+          $('#location<%= statueId %>').html(state);
         }
       }
     });

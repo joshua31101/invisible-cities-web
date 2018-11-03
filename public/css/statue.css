@@ -1,0 +1,64 @@
+.visible-option {
+  border: 1px solid #b8daff;
+  color: #004085; }
+
+.flag-option {
+  border: 1px solid #f5c6cb;
+  color: #721c24; }
+
+.card {
+  margin-right: 1rem;
+  float: left;
+  width: 100%; }
+  .card .image-container {
+    background-color: #ccc;
+    min-height: 180px; }
+
+form {
+  display: inline-block; }
+
+.card-container {
+  margin-bottom: 2rem; }
+
+.card-body {
+  padding: 15px 20px; }
+  .card-body .tag-container {
+    display: inline-block;
+    padding: 3px 0 10px;
+    font-size: 12px; }
+    .card-body .tag-container > span {
+      border-radius: 3px;
+      margin-right: 3px;
+      padding: 5px; }
+    .card-body .tag-container .private {
+      background-color: #cce5ff; }
+    .card-body .tag-container .flag {
+      background-color: #f8d7da; }
+  .card-body .remove-container {
+    float: right; }
+    .card-body .remove-container button {
+      color: red;
+      font-size: 28px; }
+  .card-body .like-container img {
+    width: 18px; }
+  .card-body .like-container span {
+    margin: 0 5px; }
+  .card-body .location {
+    font-size: 13px;
+    margin: 10px 0 0; }
+
+.option-container {
+  display: inline-block;
+  margin-right: 0.2em; }
+  .option-container form {
+    float: right; }
+    .option-container form button {
+      padding: 0.5em 1em;
+      font-size: 0.8em; }
+  .option-container .private, .option-container .visible-option:hover {
+    background-color: #cce5ff; }
+  .option-container .flag, .option-container .flag-option:hover {
+    background-color: #f8d7da; }
+
+.button-container {
+  margin-top: 10px; }

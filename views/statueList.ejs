@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <% include partials/head %>
-  <link rel="stylesheet" href="/css/statueList.css">
+  <link rel="stylesheet" href="/css/statue.css">
 </head>
 <body>
   <%- include('partials/header') %>
@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="container main-container">
-      <div class="row multiple-cards-container">
+      <div class="row multiple-cards-container card-forms-container">
         <%- include('partials/statueCardContainer', {
           statues: statues,
           isAdminUser: isAdminUser,
@@ -59,12 +59,15 @@
   </main>
   <% include partials/footer %>
 </body>
+
+<script src="/js/shared/statueForms.js"></script>
+
 <script type="text/javascript">
   $(document).ready(() => {
 
     $('.main-container').on('submit', '.statue-remove-form', (ev) => {
       ev.preventDefault();
-      let errMsg = 'Are you sure that you want to delete statue: \n\n' + ev.target.dataset['statueName'] + '?';
+      let errMsg = 'Are you sure that you want to delete statue?: \n\n' + ev.target.dataset['statueName'];
       if (confirm(errMsg)) {
         $(this).unbind('submit').submit();
       }

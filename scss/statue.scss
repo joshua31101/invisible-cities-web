@@ -1,0 +1,101 @@
+$flag-color: #f8d7da;
+$flag-font-color: #721c24;
+$flag-border-color: #f5c6cb;
+
+$private-color: #cce5ff;
+$private-font-color: #004085;
+$private-border-color: #b8daff;
+
+.visible-option {
+  border: 1px solid $private-border-color;
+  color: $private-font-color;
+}
+
+.flag-option {
+  border: 1px solid $flag-border-color;
+  color: $flag-font-color;
+}
+
+.card {
+  margin-right: 1rem;
+  float: left;
+  width: 100%;
+  .image-container {
+    background-color: #ccc;
+    min-height: 180px;
+  }
+}
+
+form {
+  display: inline-block;
+}
+
+.card-container {
+  margin-bottom: 2rem;
+}
+
+.card-body {
+  padding: 15px 20px;
+
+  .tag-container {
+    display: inline-block;
+    padding: 3px 0 10px;
+    font-size: 12px;
+    > span {
+      border-radius: 3px;
+      margin-right: 3px;
+      padding: 5px;
+    }
+    .private {
+      background-color: $private-color;
+    }
+    .flag {
+      background-color: $flag-color;
+    }
+  }
+
+  .remove-container {
+    float: right;
+    button {
+      color: red;
+      font-size: 28px;
+    }
+  }
+
+  .like-container {
+    img {
+      width: 18px;
+    }
+    span {
+      margin: 0 5px;
+    }
+  }
+
+  .location {
+    font-size: 13px;
+    margin: 10px 0 0;
+  }
+}
+
+.option-container {
+  display: inline-block;
+  margin-right: 0.2em;
+  form {
+    float: right;
+    button {
+      padding: 0.5em 1em;
+      font-size: 0.8em;
+    }
+  }
+  .private, .visible-option:hover {
+    background-color: $private-color;
+  }
+  .flag, .flag-option:hover {
+    background-color: $flag-color;
+  }
+}
+
+.button-container {
+  margin-top: 10px;
+}
+

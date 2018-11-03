@@ -3,7 +3,7 @@
 <head>
   <% include partials/head %>
   <link rel="stylesheet" href="/css/campusMap.css">
-  <link rel="stylesheet" href="/css/statueList.css">
+  <link rel="stylesheet" href="/css/statue.css">
 </head>
 <body>
   <%- include('partials/header') %>
@@ -15,87 +15,15 @@
     </div>
     <div class="container">
       <div class="row">
-        <div id="map"></div>
+        <div id="map" class="card-forms-container"></div>
       </div>
     </div>
   </main>
   <% include partials/footer %>
 </body>
+
+<script src="/js/shared/statueForms.js"></script>
 <script>
-
-  $(document).ready(function() {
-    $('#map').on('submit', '.statue-flag-form', function(ev) {
-      ev.preventDefault();
-      const $this = $(ev.target);
-      const statueId = $this.find('input[name=statueId]').val();
-      const isFlagged = $this.find('input[name=isFlagged]').val();
-      $.ajax({
-        url: '/statues/flag',
-        method: 'POST',
-        data: {
-          isFlagged: isFlagged,
-          statueId: statueId
-        },
-        success: function(data) {
-          const $statueCard = $('#statue' + data.statueId);
-          $statueCard.find('.text-flag')[0].innerText = data.isFlagged;
-          $statueCard.find('.flag-btn')[0].innerText = data.isFlagged ? 'Unflag' : 'Flag';
-          $statueCard.find('input[name=isFlagged]').val(data.isFlagged);
-        },
-        error: function(xhr) {
-        }
-      });
-    });
-
-    $('#map').on('submit', '.statue-private-form', function(ev) {
-      ev.preventDefault();
-      const $this = $(ev.target);
-      const statueId = $this.find('input[name=statueId]').val();
-      const isPrivate = $this.find('input[name=isPrivate]').val();
-      $.ajax({
-        url: '/statues/private',
-        method: 'POST',
-        data: {
-          isPrivate: isPrivate,
-          statueId: statueId
-        },
-        success: function(data) {
-          const $statueCard = $('#statue' + data.statueId);
-          $statueCard.find('.text-private')[0].innerText = data.isPrivate ? 'Private' : 'Public';
-          $statueCard.find('.private-btn')[0].innerText = data.isPrivate ? 'Set public' : 'Set private';
-          $statueCard.find('input[name=isPrivate]').val(data.isPrivate);
-        },
-        error: function(xhr) {
-        }
-      });
-    });
-
-    $('#map').on('submit', '.statue-remove-form', function(ev) {
-      ev.preventDefault();
-      let errMsg = 'Are you sure that you want to delete statue: \n\n' + ev.target.dataset['statueName'] + '?';
-      if (confirm(errMsg)) {
-        const $this = $(ev.target);
-        const statueId = $this.find('input[name=statueId]').val();
-        $.ajax({
-          url: '/statues/remove',
-          method: 'POST',
-          data: {
-            statueId: statueId
-          },
-          success: function(data) {
-            location.reload();
-          },
-          error: function(xhr) {
-
-          }
-        });
-      }
-
-    });
-
-  });
-
- 
   function initMap() {
     const map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
@@ -132,7 +60,6 @@
       }));
     <% }) %>
 
-
     const userLocationInfoWindow = new google.maps.InfoWindow;
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
@@ -161,10 +88,11 @@
                             'Error: Your browser doesn\'t support geolocation.');
       userLocationInfoWindow.open(map);
     }
-}
+  }
+  </script>
 
-</script>
   <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.NODE_ENV === 'production' ? 'AIzaSyDAoa3AC0rswHP4W5R17Po4UQqTEWeqstg' : 'AIzaSyC-126jQxDJMWuci63ka1o_NtHoWogIudk'  %>&callback=initMap">
   </script>
-  </html>
+
+</html>
