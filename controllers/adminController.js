@@ -36,7 +36,8 @@ exports.adminAddPost = function(req, res) {
           req.session.error = error.message;
           return res.redirect('/admin');
         }
-        req.session.success = `Successfully added ${email}!`;
+        req.session.success = 'Successfully <b>added</b> ' + email;
+        res.locals.isRemoved = false;
         return res.redirect('/admin');
       });
     } else {
@@ -52,7 +53,8 @@ exports.adminRemovePost = function(req, res) {
     if (error) {
       req.session.error = 'Something went wrong! Here is detail: ' + error;
     } else {
-      req.session.success = `Successfully removed ${email}!`;
+      req.session.success = 'Successfully ' + '<b>removed</b> ' + email;
+      res.locals.isRemoved = true;
     }
     res.redirect('/admin');
   });
