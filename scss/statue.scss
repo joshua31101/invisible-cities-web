@@ -49,7 +49,7 @@ form {
     .private {
       background-color: $private-color;
     }
-    .flag {
+    .flagged {
       background-color: $flag-color;
     }
   }
@@ -90,7 +90,7 @@ form {
   .private, .visible-option:hover {
     background-color: $private-color;
   }
-  .flag, .flag-option:hover {
+  .flagged, .flag-option:hover {
     background-color: $flag-color;
   }
 }

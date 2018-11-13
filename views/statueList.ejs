@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <% include partials/head %>
-  <link rel="stylesheet" href="/css/statue.css">
+  <link rel="stylesheet" href="/css/statueList.css">
 </head>
 <body>
   <%- include('partials/header') %>
@@ -23,7 +23,7 @@
       </form>
       <div id="filterSort" class="col-sm-12 text-right">
         <% if (isAdminUser) { %>
-          <div class="filter-container">
+          <!-- <div class="filter-container">
             <label for="filter">Filter by </label>
             <div id="filter" class="ml-2 d-inline">
               <div class="filter-flag-container btn-group ml-2" role="group" aria-label="filter by flag">
@@ -35,9 +35,13 @@
                 <button type="button" class="btn btn-outline-secondary" data-filter="public">Public</button>
               </div>
             </div>
+          </div> -->
+          <div class="filter-container d-inline-block float-left">
+            <button type="button" class="btn btn-outline-secondary" data-filter="flagged">Flagged</button>
+            <button type="button" class="btn btn-outline-secondary" data-filter="private">Private</button>
           </div>
         <% } %>
-        <div class="sorting-container mt-2">
+        <div class="sorting-container d-inline-block">
           <label for="sort">sort by </label>
           <div id="sort" class="btn-group ml-2" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-outline-secondary" data-sort="likes">Like</button>
@@ -84,41 +88,44 @@
     $('#filterSort').click((e) => {
       $('#noStatue').remove();
       $(window).off('scroll');
+
       const $clickedButton = $(e.target);
       const filterBy = $clickedButton.data('filter');
       const sortBy = $clickedButton.data('sort');
       const isActive = $clickedButton.hasClass('active');
+      const $sibilingButton = $clickedButton.siblings();
+      const isSibilingButtonActive = $sibilingButton.hasClass('active');
 
-      const $resetButton = $clickedButton.siblings();
-      const resetFilter = $resetButton.data('filter');
-      const resetSort = $resetButton.data('sort');
-      const isResetButtonActive = $resetButton.hasClass('active');
-      if (isResetButtonActive) {
-        $resetButton.removeClass('active');
-        if (resetFilter) {
-          shuffleInstance.filter();
-        } else {
-          shuffleInstance.sort();
-        }
-      }
+      // const $resetButton = $clickedButton.siblings();
+      // const resetFilter = $resetButton.data('filter');
+      // const resetSort = $resetButton.data('sort');
+      // const isResetButtonActive = $resetButton.hasClass('active');
+      // if (isResetButtonActive) {
+      //   $resetButton.removeClass('active');
+      //   if (resetFilter) {
+      //     shuffleInstance.filter();
+      //   } else {
+      //     shuffleInstance.sort();
+      //   }
+      // }
 
       if (filterBy) {
-        const $buttonContainer = $clickedButton.parent();
-        const isFlagFilter = $buttonContainer.hasClass('filter-flag-container');
-        let savedFilter = '';
-        if (isFlagFilter) {
-          savedFilter = $('.filter-visibility-container').find('.active').data('filter');
-        } else {
-          savedFilter = $('.filter-flag-container').find('.active').data('filter');
+        const filter = [];
+        if (isSibilingButtonActive) {
+          filter.push($sibilingButton.data('filter'));
         }
         if (isActive) {
           $clickedButton.removeClass('active');
-          shuffleInstance.filter(savedFilter);
         } else {
+          filter.push(filterBy);
           $clickedButton.addClass('active');
-          savedFilter ? shuffleInstance.filter([savedFilter, filterBy]) : shuffleInstance.filter([filterBy]);
         }
+        shuffleInstance.filter(filter);
       } else if (sortBy) {
+        if (isSibilingButtonActive) {
+          $sibilingButton.removeClass('active');
+          shuffleInstance.sort();
+        }
         let options = {};
         if (isActive) {
           $clickedButton.removeClass('active');

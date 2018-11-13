@@ -62,3 +62,8 @@ form {
 
 .button-container {
   margin-top: 10px; }
+
+.filter-container .btn {
+  margin-right: 3px;
+  border: 1px solid #ccc;
+  border-radius: 50px; }

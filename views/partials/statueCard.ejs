@@ -10,7 +10,7 @@
           <span class="visible-option private">Private</span>
         <% } %>
         <% if (statue.isFlagged) { %>
-          <span class="flag-option flag">Flagged</span>
+          <span class="flag-option flagged">Flagged</span>
         <% } %>
         </div>
       <% } %>
@@ -56,11 +56,11 @@
             <input type="hidden" name="isFlagged" value="<%= statue.isFlagged %>">
             </button>
             <% if (statue.isFlagged) { %>
-              <button type="submit" class="flag-option flag btn" data-statue-name="<%= statue.name %>">
+              <button type="submit" class="flag-option flagged btn" data-statue-name="<%= statue.name %>">
                   Unflag
               </button>
             <% } else { %>
-              <button type="submit" class="flag-option unflag btn" data-statue-name="<%= statue.name %>">
+              <button type="submit" class="flag-option unflagged btn" data-statue-name="<%= statue.name %>">
                   Flag for review
               </button>
             <% } %>
