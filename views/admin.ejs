@@ -14,19 +14,19 @@
     <form class="container col-sm-8 row mx-auto" action="/admin/add" method="POST">
       <% if (success) { %>
         <div class="alert alert-success w-100 text-center" role="alert">
-          <%= success %>
+          <%- success %>
         </div>
       <% } %>
       <% if (error) { %>
         <div class="alert alert-danger w-100 text-center" role="alert">
-          <%= error %>
+          <%- error %>
         </div>
       <% } %>
       <div class="input-group mt-3 mb-3">
         <label for="email" class="p-2">Add an admin: </label>
         <input id="email" type="text" name="email" value="<%= email ? email : '' %>" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="search-email" />
         <div class="input-group-append">
-          <input type="submit" value="Search" class="btn btn-outline-secondary" />
+          <input type="submit" value="Add" class="btn btn-outline-secondary" />
         </div>
       </div>
     </form>
@@ -39,8 +39,8 @@
         <% email = adminEmailList[i].replace(',', '.') %>
         <form class="row" action="/admin/remove" method="POST">
           <input name="email" type="hidden" value="<%= email %>" />
-          <div class="admin-list-container">
-            <span class="admin-info"><%= email %></span>
+          <div class="admin-list-container text-center">
+            <span class="admin-info text-center"><%= email %></span>
             <button type="submit" class="close" aria-label="Close">
               <span class="text-danger" aria-hidden="true">&times;</span>
             </button>
