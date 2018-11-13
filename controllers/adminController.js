@@ -1,12 +1,12 @@
 const firebase = require('./firebaseController');
 
-exports.index = function(req, res) {
+exports.index = (req, res) => {
   const error = req.session.error;
   const success = req.session.success;
   delete req.session.error;
   delete req.session.success;
 
-  firebase.getAdmins(function(admins) {
+  firebase.getAdmins((admins) => {
     res.render('admin', {
       userFound: false,
       email: '',
@@ -17,21 +17,21 @@ exports.index = function(req, res) {
   });
 };
 
-exports.adminAddPost = function(req, res) {
+exports.adminAddPost = (req, res) => {
   const email = req.body.email;
   if (!email || (email && !email.includes('@'))) {
     req.session.error = 'Please enter a valid email.';
     return res.redirect('/admin');
   }
 
-  firebase.hasUser(email, function(userFound, error) {
+  firebase.hasUser(email, (userFound, error) => {
     if (error) {
       req.session.error = error.message;
       return res.redirect('/admin');
     }
 
     if (userFound) {
-      firebase.addAdminUser(email, function(error) {
+      firebase.addAdminUser(email, (error) => {
         if (error) {
           req.session.error = error.message;
           return res.redirect('/admin');
@@ -47,9 +47,9 @@ exports.adminAddPost = function(req, res) {
   });
 };
 
-exports.adminRemovePost = function(req, res) {
+exports.adminRemovePost = (req, res) => {
   const email = req.body.email;
-  firebase.removeAdmin(email, function(error) {
+  firebase.removeAdmin(email, (error) => {
     if (error) {
       req.session.error = 'Something went wrong! Here is detail: ' + error;
     } else {

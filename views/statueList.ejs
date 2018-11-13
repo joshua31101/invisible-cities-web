@@ -23,19 +23,6 @@
       </form>
       <div id="filterSort" class="col-sm-12 text-right">
         <% if (isAdminUser) { %>
-          <!-- <div class="filter-container">
-            <label for="filter">Filter by </label>
-            <div id="filter" class="ml-2 d-inline">
-              <div class="filter-flag-container btn-group ml-2" role="group" aria-label="filter by flag">
-                <button type="button" class="btn btn-outline-secondary" data-filter="flagged">Flagged</button>
-                <button type="button" class="btn btn-outline-secondary" data-filter="unflagged">Unflagged</button>
-              </div>
-              <div class="filter-visibility-container btn-group ml-2" role="group" aria-label="filter by visibility">
-                <button type="button" class="btn btn-outline-secondary" data-filter="private">Private</button>
-                <button type="button" class="btn btn-outline-secondary" data-filter="public">Public</button>
-              </div>
-            </div>
-          </div> -->
           <div class="filter-container d-inline-block float-left">
             <button type="button" class="btn btn-outline-secondary" data-filter="flagged">Flagged</button>
             <button type="button" class="btn btn-outline-secondary" data-filter="private">Private</button>
@@ -95,19 +82,6 @@
       const isActive = $clickedButton.hasClass('active');
       const $sibilingButton = $clickedButton.siblings();
       const isSibilingButtonActive = $sibilingButton.hasClass('active');
-
-      // const $resetButton = $clickedButton.siblings();
-      // const resetFilter = $resetButton.data('filter');
-      // const resetSort = $resetButton.data('sort');
-      // const isResetButtonActive = $resetButton.hasClass('active');
-      // if (isResetButtonActive) {
-      //   $resetButton.removeClass('active');
-      //   if (resetFilter) {
-      //     shuffleInstance.filter();
-      //   } else {
-      //     shuffleInstance.sort();
-      //   }
-      // }
 
       if (filterBy) {
         const filter = [];

@@ -1,12 +1,12 @@
 const firebase = require('./firebaseController');
 
-exports.search = function(req, res) {
+exports.search = (req, res) => {
   const query = req.query.q;
   const searchCategory = req.query.searchCategory;
   const isAdminUser = req.session.isAdminUser;
 
-  firebase.searchStatues(query, searchCategory, function(statues) {
-    firebase.getMaps(function(maps) {
+  firebase.searchStatues(query, searchCategory, (statues) => {
+    firebase.getMaps((maps) => {
       res.render('statueList', {
         statues: statues,
         query,
@@ -18,11 +18,11 @@ exports.search = function(req, res) {
   });
 };
 
-exports.statueCardGet = function(req, res) {
+exports.statueCardGet = (req, res) => {
   const sId = req.params.id;
   const isAdminUser = req.session.isAdminUser;
 
-  firebase.getStatue(sId, function(statue) {
+  firebase.getStatue(sId, (statue) => {
     res.render('partials/statueCard', {
       statueId: sId,
       statue,
@@ -32,7 +32,7 @@ exports.statueCardGet = function(req, res) {
   });
 };
 
-exports.statueRemove = function(req, res) {
+exports.statueRemove = (req, res) => {
   const statueId = req.body.statueId;
   firebase.removeStatue(statueId);
   if (req.xhr) {
@@ -41,7 +41,7 @@ exports.statueRemove = function(req, res) {
   return res.redirect('/');
 };
 
-exports.statueFlagPost = function(req, res) {
+exports.statueFlagPost = (req, res) => {
   const isFlagged = JSON.parse(req.body.isFlagged);
   const statueId = req.body.statueId;
   firebase.toggleStatueFlag(statueId, isFlagged);
@@ -51,7 +51,7 @@ exports.statueFlagPost = function(req, res) {
   return res.redirect('/');
 };
 
-exports.statuePrivatePost = function(req, res) {
+exports.statuePrivatePost = (req, res) => {
   const isPrivate = JSON.parse(req.body.isPrivate);
   const statueId = req.body.statueId;
   firebase.toggleStatuePrivate(statueId, isPrivate);

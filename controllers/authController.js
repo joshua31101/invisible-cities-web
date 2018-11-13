@@ -1,18 +1,18 @@
 const firebase = require('./firebaseController');
 
-exports.loginGet = function(req, res) {
+exports.loginGet = (req, res) => {
   const err = req.session.error;
   delete req.session.error;
   res.render('login', { error: err });
 };
 
-exports.loginPost = function(req, res) {
+exports.loginPost = (req, res) => {
   if (!req.body) {
     req.session.error = 'Please type an email and password.';
   }
   const email = req.body.email;
   const password = req.body.password;
-	firebase.login(email, password, function(error, isAdminUser) {
+	firebase.login(email, password, (error, isAdminUser) => {
     if (error) {
       req.session.error = 'Incorrect username or password.';
       res.redirect('/login');
@@ -24,8 +24,8 @@ exports.loginPost = function(req, res) {
   });
 };
 
-exports.logout = function(req, res) {
-	firebase.logout(function(error) {
+exports.logout = (req, res) => {
+	firebase.logout((error) => {
     if (error) {
       return res.status(500).send(error.message);
     } else {

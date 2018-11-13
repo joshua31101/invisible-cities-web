@@ -29,7 +29,7 @@ router.get('/login', authController.loginGet);
 router.post('/login', authController.loginPost);
 router.get('/logout', authController.logout);
 
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
   const isAdminUser = req.session.isAdminUser;
   const isScroll = req.query.isScroll;
   let lastStatueKey = req.session.lastStatueKey;
@@ -44,7 +44,7 @@ router.get('/', function(req, res) {
     });
   }
 
-  firebase.getStatues(lastStatueKey, function(statues) {
+  firebase.getStatues(lastStatueKey, (statues) => {
     const statueKeyList = Object.keys(statues);
     const _lastStatueKey = statueKeyList[statueKeyList.length - 1];
     // update last statue key for next pagination reference
@@ -56,7 +56,7 @@ router.get('/', function(req, res) {
     if (statueKeyList.length < 17) {
       req.session.lastStatueKey = null;
     }
-    firebase.getMaps(function(maps) {
+    firebase.getMaps((maps) => {
       if (isScroll) {
         return res.render('partials/statueCardContainer', {
           statues: statues,
@@ -75,11 +75,11 @@ router.get('/', function(req, res) {
   });
 });
 
-router.get('/campus-map', function(req, res) {
+router.get('/campus-map', (req, res) => {
   const isAdminUser = req.session.isAdminUser;
   const mapDesign = require('../public/assets/map-design.json');
 
-  firebase.getMaps(function(maps) {
+  firebase.getMaps((maps) => {
     res.render('campusMap', {
       maps: maps,
       isAdminUser,
