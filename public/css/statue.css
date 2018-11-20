@@ -44,8 +44,9 @@ form {
   .card-body .like-container span {
     margin: 0 5px; }
   .card-body .location {
-    font-size: 13px;
-    margin: 10px 0 0; }
+    margin: 10px 0 0;
+    min-height: 20px;
+    font-size: 13px; }
 
 .option-container {
   display: inline-block;
