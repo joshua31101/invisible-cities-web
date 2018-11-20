@@ -3,14 +3,12 @@ const elasticsearch = require('./elasticsearchController');
 
 exports.search = (req, res) => {
   const query = req.query.q;
-  const isAdminUser = req.session.isAdminUser;
 
   elasticsearch.searchStatuesByNameDesc(query, (err, data, _) => {
     if (err) {
       res.render('statueList', {
         statues: null,
         query,
-        isAdminUser,
         maps: null,
       });
     } else {
@@ -22,7 +20,6 @@ exports.search = (req, res) => {
         res.render('statueList', {
           statues: statues,
           query,
-          isAdminUser,
           maps: maps,
         });
       });
@@ -32,13 +29,11 @@ exports.search = (req, res) => {
 
 exports.statueCardGet = (req, res) => {
   const sId = req.params.id;
-  const isAdminUser = req.session.isAdminUser;
 
   firebase.getStatue(sId, (statue) => {
     res.render('partials/statueCard', {
       statueId: sId,
       statue,
-      isAdminUser,
       map: null,
     });
   });

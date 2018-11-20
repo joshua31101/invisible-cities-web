@@ -30,7 +30,6 @@ router.post('/login', authController.loginPost);
 router.get('/logout', authController.logout);
 
 router.get('/', (req, res) => {
-  const isAdminUser = req.session.isAdminUser;
   const isScroll = req.query.isScroll;
   let lastStatueKey = req.session.lastStatueKey;
   // if the user visits the page and not scrolled
@@ -39,7 +38,6 @@ router.get('/', (req, res) => {
   } else if (!lastStatueKey) {
     return res.render('partials/statueCardContainer', {
       statues: null,
-      isAdminUser,
       maps: null,
     });
   }
@@ -60,13 +58,11 @@ router.get('/', (req, res) => {
       if (isScroll) {
         return res.render('partials/statueCardContainer', {
           statues: statues,
-          isAdminUser,
           maps: maps,
         });
       }
       res.render('statueList', {
         statues: statues,
-        isAdminUser,
         query: null,
         maps: maps,
       });
@@ -75,13 +71,11 @@ router.get('/', (req, res) => {
 });
 
 router.get('/campus-map', (req, res) => {
-  const isAdminUser = req.session.isAdminUser;
   const mapDesign = require('../public/assets/map-design.json');
 
   firebase.getMaps((maps) => {
     res.render('campusMap', {
       maps: maps,
-      isAdminUser,
       mapDesign,
     });
   });
