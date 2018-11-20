@@ -35,6 +35,7 @@ app.use(function(req, res, next) {
   if (firebase.hasLoggedIn()) {
     res.locals.isAdminUser = isAdminUser;
     res.locals.hasLoggedIn = 1;
+    res.locals.currentPath = currentUrl;   
     if (currentUrl === '/login' || (currentUrl.includes('/admin') && !isAdminUser)) {
       return res.redirect('/');
     }

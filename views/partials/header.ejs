@@ -20,10 +20,10 @@
     <section class="navbar menu-navbar">
       <div class="container">
         <ul>
-          <li><a class="btn" href="/">Statues</a></li>
-          <li><a class="btn" href="/campus-map">Campus Map</a></li>
+          <li><a class="btn <%= currentPath === '/' ? 'active' : '' %>" href="/">Statues</a></li>
+          <li><a class="btn <%= currentPath === '/campus-map' ? 'active' : '' %>" href="/campus-map">Campus Map</a></li>
           <% if (isAdminUser) { %>
-            <li><a class="btn" href="/admin">Admin Portal</a></li>
+            <li><a class="btn <%= currentPath === '/admin' ? 'active' : '' %>" href="/admin">Admin Portal</a></li>
           <% } %>
         </ul>
       </div>

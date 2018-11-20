@@ -21,7 +21,7 @@
     .menu-navbar ul a {
       border-radius: 0;
       color: #262626; }
-      .menu-navbar ul a:hover {
+      .menu-navbar ul a:hover, .menu-navbar ul a.active {
         background: none repeat scroll 0 0 #262626;
         color: #FFFFFF;
         transition: background 0.3s ease 0s; }
