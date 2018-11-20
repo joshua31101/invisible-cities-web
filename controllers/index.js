@@ -68,7 +68,6 @@ router.get('/', (req, res) => {
         statues: statues,
         isAdminUser,
         query: null,
-        searchCategory: null,
         maps: maps,
       });
     });

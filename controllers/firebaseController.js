@@ -33,11 +33,11 @@ exports.getStatues = (lastStatueKey, callback) => {
     });
 };
 
-exports.searchStatues = (query, searchCategory, callback) => {
-  return firebase.database().ref('/statues').orderByChild(searchCategory).startAt(query).once("value").then((snapshot) => {
+exports.getAllStatues = (callback) => {
+  firebase.database().ref('/statues').orderByKey().once('value').then((snapshot) => {
     callback(snapshot.val());
   });
-};
+}
 
 exports.getStatue = (sId, callback) => {
   return firebase.database().ref('/statues/' + sId).once('value').then((snapshot) => {

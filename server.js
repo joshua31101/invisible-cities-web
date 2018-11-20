@@ -27,6 +27,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 app.use(express.static(__dirname + '/public'));
 
+
 app.use(function(req, res, next) {
   const currentUrl = url.parse(req.url).pathname;
   const isAdminUser = req.session.isAdminUser;

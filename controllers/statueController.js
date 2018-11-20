@@ -1,20 +1,32 @@
 const firebase = require('./firebaseController');
+const elasticsearch = require('./elasticsearchController');
 
 exports.search = (req, res) => {
   const query = req.query.q;
-  const searchCategory = req.query.searchCategory;
   const isAdminUser = req.session.isAdminUser;
 
-  firebase.searchStatues(query, searchCategory, (statues) => {
-    firebase.getMaps((maps) => {
+  elasticsearch.searchStatuesByNameDesc(query, (err, data, _) => {
+    if (err) {
       res.render('statueList', {
-        statues: statues,
+        statues: null,
         query,
-        searchCategory,
         isAdminUser,
-        maps: maps,
+        maps: null,
       });
-    });
+    } else {
+      const statues = {};
+      data.hits.hits.forEach(hit => {
+        statues[hit._id] = hit._source;
+      });
+      firebase.getMaps((maps) => {
+        res.render('statueList', {
+          statues: statues,
+          query,
+          isAdminUser,
+          maps: maps,
+        });
+      });
+    }
   });
 };
 
