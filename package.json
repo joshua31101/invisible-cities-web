@@ -13,7 +13,8 @@
     "type": "git",
     "url": "git+https://github.com/joshua31101/invisible-cities-web.git"
   },
-  "author": "",
+  "author": "Joshua Wang",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/joshua31101/invisible-cities-web/issues"
   },
