@@ -20,7 +20,7 @@
     <section class="navbar menu-navbar">
       <div class="container">
         <ul>
-          <li><a class="btn <%= currentPath === '/' ? 'active' : '' %>" href="/">Statues</a></li>
+          <li><a class="btn <%= currentPath === '/' || currentPath.includes('/statues') ? 'active' : '' %>" href="/">Statues</a></li>
           <li><a class="btn <%= currentPath === '/campus-map' ? 'active' : '' %>" href="/campus-map">Campus Map</a></li>
           <% if (isAdminUser) { %>
             <li><a class="btn <%= currentPath === '/admin' ? 'active' : '' %>" href="/admin">Admin Portal</a></li>
