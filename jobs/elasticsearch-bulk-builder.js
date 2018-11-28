@@ -41,7 +41,7 @@ function _getLocationPromises(statues, callback) {
         const statueIndex = { index: { _index: 'statue', _type: 'info', _id: sId } };
         const statueHash = {
           description: statue.description,
-          location: null,
+          location: map.location ? map.location : '',
           dislike: statue.dislike,
           isFlagged: statue.isFlagged,
           isPrivate: statue.isPrivate,
@@ -51,8 +51,18 @@ function _getLocationPromises(statues, callback) {
           statuePreviewPicURL: statue.statuePreviewPicURL,
         };
 
+        // skip fetching location of a coord if exists
+        if (map.location) {
+          return resolve([
+            statueIndex,
+            statueHash
+          ]);
+        }
+
         return fetchLocation(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${map.latitude}&lon=${map.longitude}&zoom=10`)
           .then(data => {
+            let location = '';
+            firebase.addLocation(sId, location);
             if (data.error) {
               return resolve([
                 statueIndex,
@@ -61,12 +71,12 @@ function _getLocationPromises(statues, callback) {
             }
             const city = data.address.city;
             const state = data.address.state;
-            let location = '';
             if (city === undefined) {
               location = state;
             } else {
               location = `${city} ${state}`;
             }
+            firebase.addLocation(sId, location);
             statueHash.location = location;
 
             resolve([

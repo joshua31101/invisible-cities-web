@@ -57,6 +57,10 @@ exports.getMap = (sId, callback) => {
   });
 };
 
+exports.addLocation = (sId, location) => {
+  return firebase.database().ref('/maps/' + sId).update({ location: location });
+};
+
 exports.removeStatue = (sId) => {
   firebase.database().ref('/maps/' + sId).remove();
   firebase.database().ref('/ratings/' + sId).remove();
