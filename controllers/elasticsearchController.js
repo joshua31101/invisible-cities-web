@@ -5,7 +5,7 @@ const bonsai_url = process.env.BONSAI_URL,
         log: 'trace',
       });
 
-exports.searchStatuesByNameDesc = (query, callback) => {
+exports.searchStatues = (query, callback) => {
   client.search({
     index: 'statue',
     type: 'info',
@@ -15,6 +15,7 @@ exports.searchStatuesByNameDesc = (query, callback) => {
           should: [
             { match: { description: `*${query}*` } },
             { match: { name: `*${query}*` } },
+            { match: { location: `*${query}*` } },
           ]
         }
       },

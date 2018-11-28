@@ -4,7 +4,7 @@ const elasticsearch = require('./elasticsearchController');
 exports.search = (req, res) => {
   const query = req.query.q;
 
-  elasticsearch.searchStatuesByNameDesc(query, (err, data, _) => {
+  elasticsearch.searchStatues(query, (err, data, _) => {
     if (err) {
       res.render('statueList', {
         statues: null,
