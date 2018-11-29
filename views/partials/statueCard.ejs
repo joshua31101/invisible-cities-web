@@ -29,8 +29,8 @@
       <img src="/assets/images/thumbsup.svg" alt="Like count"><span><%= statue.like %></span>
       <img src="/assets/images/thumbsdown.svg" alt="Dislike count"><span><%= statue.dislike %></span>
     </div>
-    <% if (map) { %>
-      <div id="location<%= statueId %>" class="location"></div>
+    <% if (location) { %>
+      <div class="location"><span><%- location %></span></div>
     <% } %>
 
     <% if (isAdminUser) { %>
@@ -70,21 +70,3 @@
     <% } %>
   </div>
 </div>
-
-<% if (map) { %>
-  <script>
-    $.ajax({
-      url: 'https://nominatim.openstreetmap.org/reverse?format=json&lat=<%= map.latitude %>&lon=<%= map.longitude %>&zoom=10',
-      data: 'GET',
-      success: (data) => {
-        const city = data.address.city;
-        const state = data.address.state;
-        if (city != undefined) {
-          $('#location<%= statueId %>').html(city + ', ' + state);
-        } else {
-          $('#location<%= statueId %>').html(state);
-        }
-      }
-    });
-  </script>
-<% } %>

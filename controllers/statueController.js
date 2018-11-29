@@ -31,11 +31,13 @@ exports.statueCardGet = (req, res) => {
   const sId = req.params.id;
 
   firebase.getStatue(sId, (statue) => {
-    res.render('partials/statueCard', {
-      statueId: sId,
-      statue,
-      map: null,
-    });
+    firebase.getMap(sId, (map) => {
+      res.render('partials/statueCard', {
+        statueId: sId,
+        statue,
+        location: map.location,
+      });
+    })
   });
 };
 
