@@ -24,7 +24,7 @@
       <% } %>
       <div class="input-group mt-3 mb-3">
         <label for="email" class="p-2">Add an admin: </label>
-        <input id="email" type="text" name="email" value="<%= email ? email : '' %>" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="search-email" />
+        <input id="email" type="text" name="email" value="<%- email ? email : '' %>" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="search-email" />
         <div class="input-group-append">
           <input type="submit" value="Add" class="btn btn-outline-secondary" />
         </div>
@@ -38,9 +38,9 @@
       <% for (var i = adminEmailList.length - 1; i >= 0; i--) { %>
         <% email = adminEmailList[i].replace(',', '.') %>
         <form class="row" action="/admin/remove" method="POST">
-          <input name="email" type="hidden" value="<%= email %>" />
+          <input name="email" type="hidden" value="<%- email %>" />
           <div class="admin-list-container text-center">
-            <span class="admin-info text-center"><%= email %></span>
+            <span class="admin-info text-center"><%- email %></span>
             <button type="submit" class="close" aria-label="Close">
               <span class="text-danger" aria-hidden="true">&times;</span>
             </button>
