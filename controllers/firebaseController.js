@@ -57,6 +57,10 @@ exports.getMap = (sId, callback) => {
   });
 };
 
+exports.addTags = (sId, tags) => {
+  return firebase.database().ref('/statues/' + sId).update({ tags: tags.join(',') });
+}
+
 exports.addLocation = (sId, location) => {
   return firebase.database().ref('/maps/' + sId).update({ location: location });
 };
