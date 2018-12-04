@@ -2,3 +2,13 @@
   display: inline-block; }
   .admin-list-container button {
     margin-left: 10px; }
+
+.admin-container {
+  display: inline-block;
+  position: relative;
+  text-align: center; }
+
+.admin-objects {
+  position: relative;
+  text-align: center;
+  padding: 20px; }
