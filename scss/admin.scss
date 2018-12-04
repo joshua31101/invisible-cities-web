@@ -1,19 +1,9 @@
-.admin-list-container {
-  display: inline-block;
-  button {
-    margin-left: 10px;
-
-  }
-}
-
 .admin-container {
-    display: inline-block;
-    position: relative;
-    text-align: center;
-}
-
-.admin-objects {
-    position: relative;
-    text-align: center;
-    padding: 20px
+  .admin-info {
+    margin-right: 5px;
+    padding: 10px 5px;
+  }
+  form {
+    padding: 10px 0;
+  }  
 }

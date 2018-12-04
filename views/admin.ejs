@@ -30,27 +30,20 @@
         </div>
       </div>
     </form>
-    <div class="admin-container">
+    <div class="admin-container text-center">
       <% adminEmailList = Object.keys(admins) %>
-      <div class="heading">
-        <h3>Admins</h4>
-      </div>
-      <div>
-        <% for (var i = adminEmailList.length - 1; i >= 0; i--) { %>
-          <% email = adminEmailList[i].replace(',', '.') %>
-          <div class="admin-objects">
-            <form class="row text-center" action="/admin/remove" method="POST">
-              <input name="email" type="hidden" value="<%= email %>" />
-              <div class="admin-list-container text-center">
-                <span class="admin-info text-center"><%= email %></span>
-                <button type="submit" class="close" aria-label="Close">
-                  <span class="text-danger" aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </form>
-          </div>
-        <% } %>
-      </div>
+      <% for (var i = adminEmailList.length - 1; i >= 0; i--) { %>
+        <% email = adminEmailList[i].replace(',', '.') %>
+        <div class="admin-form-container">
+          <form class="row d-inline-block" action="/admin/remove" method="POST">
+            <input name="email" type="hidden" value="<%= email %>" />
+            <span class="admin-info"><%= email %></span>
+            <button type="submit" class="close" aria-label="Close">
+              <span class="text-danger" aria-hidden="true">&times;</span>
+            </button>
+          </form>
+        </div>
+      <% } %>
     </div>
   </main>
   <% include partials/footer %>
