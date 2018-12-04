@@ -23,6 +23,13 @@
         </form>
       </div>
     <% } %>
+    <div class="statue-tag-container">
+      <% if (statue.tags) { %>
+        <% statue.tags.split(',').forEach((tag) => { %>
+          <span>#<%- tag %></span>
+        <% }); %>
+      <% } %>
+    </div>
     <h5 class="card-title mb-1"><%- statue.name %></h5>
     <p class="card-text mb-2"><%- statue.description %></p>
     <div class="like-container">

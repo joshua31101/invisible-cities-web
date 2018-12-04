@@ -34,6 +34,21 @@ form {
       background-color: #cce5ff; }
     .card-body .tag-container .flagged {
       background-color: #f8d7da; }
+  .card-body .statue-tag-container span {
+    border-radius: 5px;
+    padding: 1px 5px;
+    vertical-align: top;
+    font-size: 12px; }
+    .card-body .statue-tag-container span:nth-child(0) {
+      border: 1px solid #e600e6; }
+    .card-body .statue-tag-container span:nth-child(1) {
+      border: 1px solid #e600e6; }
+    .card-body .statue-tag-container span:nth-child(2) {
+      border: 1px solid #6666ff; }
+    .card-body .statue-tag-container span:nth-child(3) {
+      border: 1px solid #ff6666; }
+    .card-body .statue-tag-container span:nth-child(4) {
+      border: 1px solid #ff6666; }
   .card-body .remove-container {
     float: right; }
     .card-body .remove-container button {
