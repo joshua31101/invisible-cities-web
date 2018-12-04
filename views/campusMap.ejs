@@ -37,11 +37,11 @@
     <% Object.keys(maps).forEach((m, i) => { %>
       marker = new google.maps.Marker({
         position: {
-          lat: <%= maps[m].latitude %>,
-          lng: <%= maps[m].longitude %>
+          lat: <%- maps[m].latitude %>,
+          lng: <%- maps[m].longitude %>
         },
         map: map,
-        id: "<%= m %>"
+        id: "<%- m %>"
       });
 
       marker.addListener('click', (function(marker, i) {
@@ -92,7 +92,7 @@
   </script>
 
   <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.NODE_ENV === 'production' ? 'AIzaSyDAoa3AC0rswHP4W5R17Po4UQqTEWeqstg' : 'AIzaSyC-126jQxDJMWuci63ka1o_NtHoWogIudk'  %>&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=<%- process.env.NODE_ENV === 'production' ? process.env.GOOGLE_MAP_API_KEY : process.env.GOOGLE_MAP_DEV_API_KEY  %>&callback=initMap">
   </script>
 
 </html>

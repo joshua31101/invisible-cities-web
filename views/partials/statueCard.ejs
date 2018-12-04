@@ -1,6 +1,6 @@
-<div class="card" <%= statueId ? `id=statue${statueId}` : '' %>>
+<div class="card" <%- statueId ? `id=statue${statueId}` : '' %>>
   <div class="image-container">
-    <img class="card-img-top" src="<%= statue.statuePreviewPicURL ? statue.statuePreviewPicURL.substr(0, 95) + '%2f' + statue.statuePreviewPicURL.substr(96) : '' %>" alt="<%= statue.name %>">
+    <img class="card-img-top" src="<%- statue.statuePreviewPicURL ? statue.statuePreviewPicURL.substr(0, 95) + '%2f' + statue.statuePreviewPicURL.substr(96) : '' %>" alt="<%- statue.name %>">
   </div>
   <div class="card-body">
     <% if (isAdminUser) { %>
@@ -15,36 +15,43 @@
         </div>
       <% } %>
       <div class="remove-container">
-        <form class="statue-remove-form" action="/statues/remove" method="post" class="statue-remove-form" data-form-type="remove"" data-statue-name="<%= statue.name %>">
-          <input type="hidden" name="statueId" value="<%= statueId %>">
+        <form class="statue-remove-form" action="/statues/remove" method="post" class="statue-remove-form" data-form-type="remove"" data-statue-name="<%- statue.name %>">
+          <input type="hidden" name="statueId" value="<%- statueId %>">
           <button id="removeBtn" type="submit" class="close remove-btn" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </form>
       </div>
     <% } %>
-    <h5 class="card-title mb-1"><%= statue.name %></h5>
-    <p class="card-text mb-2"><%= statue.description %></p>
-    <div class="like-container">
-      <img src="/assets/images/thumbsup.svg" alt="Like count"><span><%= statue.like %></span>
-      <img src="/assets/images/thumbsdown.svg" alt="Dislike count"><span><%= statue.dislike %></span>
+    <div class="statue-tag-container">
+      <% if (statue.tags) { %>
+        <% statue.tags.split(',').forEach((tag) => { %>
+          <span>#<%- tag %></span>
+        <% }); %>
+      <% } %>
     </div>
-    <% if (map) { %>
-      <div id="location<%= statueId %>" class="location"></div>
+    <h5 class="card-title mb-1"><%- statue.name %></h5>
+    <p class="card-text mb-2"><%- statue.description %></p>
+    <div class="like-container">
+      <img src="/assets/images/thumbsup.svg" alt="Like count"><span><%- statue.like %></span>
+      <img src="/assets/images/thumbsdown.svg" alt="Dislike count"><span><%- statue.dislike %></span>
+    </div>
+    <% if (location) { %>
+      <div class="location"><span><%- location %></span></div>
     <% } %>
 
     <% if (isAdminUser) { %>
       <div class="button-container">
         <div class="option-container">
           <form class="statue-form private-form" action="/statues/private" method="post" data-form-type="visibility">
-            <input type="hidden" name="statueId" value="<%= statueId %>">
-            <input type="hidden" name="isPrivate" value="<%= statue.isPrivate %>">
+            <input type="hidden" name="statueId" value="<%- statueId %>">
+            <input type="hidden" name="isPrivate" value="<%- statue.isPrivate %>">
             <% if (statue.isPrivate) { %>
-              <button type="submit" class="visible-option private btn" data-statue-name="<%= statue.name %>">
+              <button type="submit" class="visible-option private btn" data-statue-name="<%- statue.name %>">
                 Set public
               </button>
             <% } else { %>
-              <button type="submit" class="visible-option public btn" data-statue-name="<%= statue.name %>">
+              <button type="submit" class="visible-option public btn" data-statue-name="<%- statue.name %>">
                 Set private
               </button>
             <% } %>
@@ -52,15 +59,15 @@
         </div>
         <div class="option-container">
           <form class="statue-form flag-form" action="/statues/flag" method="post" data-form-type="flag">
-            <input type="hidden" name="statueId" value="<%= statueId %>">
-            <input type="hidden" name="isFlagged" value="<%= statue.isFlagged %>">
+            <input type="hidden" name="statueId" value="<%- statueId %>">
+            <input type="hidden" name="isFlagged" value="<%- statue.isFlagged %>">
             </button>
             <% if (statue.isFlagged) { %>
-              <button type="submit" class="flag-option flagged btn" data-statue-name="<%= statue.name %>">
+              <button type="submit" class="flag-option flagged btn" data-statue-name="<%- statue.name %>">
                   Unflag
               </button>
             <% } else { %>
-              <button type="submit" class="flag-option unflagged btn" data-statue-name="<%= statue.name %>">
+              <button type="submit" class="flag-option unflagged btn" data-statue-name="<%- statue.name %>">
                   Flag for review
               </button>
             <% } %>
@@ -70,21 +77,3 @@
     <% } %>
   </div>
 </div>
-
-<% if (map) { %>
-  <script>
-    $.ajax({
-      url: 'https://nominatim.openstreetmap.org/reverse?format=json&lat=<%= map.latitude %>&lon=<%= map.longitude %>&zoom=10',
-      data: 'GET',
-      success: (data) => {
-        const city = data.address.city;
-        const state = data.address.state;
-        if (city != undefined) {
-          $('#location<%= statueId %>').html(city + ', ' + state);
-        } else {
-          $('#location<%= statueId %>').html(state);
-        }
-      }
-    });
-  </script>
-<% } %>

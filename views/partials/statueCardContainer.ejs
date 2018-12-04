@@ -7,13 +7,13 @@
     <% const likesCount = statues[sId].like; %>
     <% const dislikesCount = statues[sId].dislike; %>
     <div class="card-container col-md-6 col-lg-4"
-      data-groups='["<%= isFlagged ? "flagged" : "unflagged" %>", "<%= isPrivate ? "private" : "public" %>"]'
-      data-likes-count="<%= likesCount %>"
-      data-dislikes-count="<%= dislikesCount %>">
+      data-groups='["<%- isFlagged ? "flagged" : "unflagged" %>", "<%- isPrivate ? "private" : "public" %>"]'
+      data-likes-count="<%- likesCount %>"
+      data-dislikes-count="<%- dislikesCount %>">
       <%- include('statueCard', {
         statueId: sId,
         statue: statues[sId],
-        map: maps[sId]
+        location: maps[sId].location
       }) %>
     </div>
   <% } %>

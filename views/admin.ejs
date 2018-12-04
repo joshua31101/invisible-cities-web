@@ -24,7 +24,7 @@
       <% } %>
       <div class="input-group mt-3 mb-3">
         <label for="email" class="p-2">Add an admin: </label>
-        <input id="email" type="text" name="email" value="<%= email ? email : '' %>" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="search-email" />
+        <input id="email" type="text" name="email" value="<%- email ? email : '' %>" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="search-email" />
         <div class="input-group-append">
           <input type="submit" value="Add" class="btn btn-outline-secondary" />
         </div>

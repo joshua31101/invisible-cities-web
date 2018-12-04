@@ -11,7 +11,7 @@
       <h1>Statue List</h1>
       <form action="/statues/search" method="GET" class="col-sm-12">
         <div class="input-group mt-3 mb-3">
-          <input type="text" name="q" value="<%= query ? query : '' %>" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-statue" />
+          <input type="text" name="q" value="<%- query ? query : '' %>" class="form-control" placeholder="Search statues or location" aria-label="Search statues or location" aria-describedby="search-statue" />
           <div class="input-group-append">
             <input type="submit" value="Search" class="btn btn-outline-secondary" />
           </div>
